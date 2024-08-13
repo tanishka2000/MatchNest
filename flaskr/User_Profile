@@ -1,0 +1,26 @@
+# First of all, add new user to the user profile
+def add_user(user_profiles, name, birth_date, gender, location, interests, constellation, mbti, smoking, drinking, profession, height, bio):
+    """Adds a user profile to the provided list."""
+    user_profile = (name, birth_date, gender, location, interests, constellation, mbti, smoking, drinking, profession, height, bio)
+    user_profiles.append(user_profile)
+
+# List of user data to be added - can be read as input from file (later) or from user
+users_toadd = [
+    ('Alice', 25, 'F', 'New York', ['music', 'hiking', 'movies'],'Yes','No','','ESTP','Student','165','Just do it'),
+    ('Bob', 27, 'M', 'San Francisco', ['sports', 'movies', 'traveling'],'No','No','Cancer','ISTP','student','180','',),
+    ('Charlie', 30, 'M', 'Chicago', ['cooking', 'gaming', 'technology'],'Yes','Yes','','INFP','student','185','Hello World',)
+]
+
+# List of User Profiles
+user_profiles = []
+
+# Add user profiles to the list
+for user in users_toadd:
+    name, birth_date, gender, location, interests, constellation, mbti, smoking, drinking, profession, height, bio = user
+    add_user(user_profiles, name, birth_date, gender, location, interests, constellation, mbti, smoking, drinking, profession, height, bio,)
+
+print("List of User Profiles:")
+for profile in user_profiles:
+    print(profile)
+
+
