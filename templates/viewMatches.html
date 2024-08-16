@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swipe Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .profile-card {
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-card img {
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
+        }
+
+        .profile-card h3 {
+            margin: 10px 0 0;
+            font-size: 22px;
+        }
+
+        .profile-card p {
+            margin: 5px 15px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .buttons .dislike {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        .buttons .like {
+            background-color: #4caf50;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card" id="profile-card">
+        <img src="" alt="Profile Image" id="profile-image">
+        <h3 id="profile-name"></h3>
+        <p id="profile-bio"></p>
+        <p id="profile-age-gender"></p>
+        <p id="profile-interests"></p>
+        <div class="buttons">
+            <button class="dislike" onclick="getProfile()">Dislike</button>
+            <button class="like" onclick="getProfile()">Like</button>
+        </div>
+    </div>
+
+    <script>
+        function getProfile() {
+            fetch('/get_profile')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        document.getElementById('profile-image').src = data.image;
+                        document.getElementById('profile-name').innerText = data.name;
+                        document.getElementById('profile-bio').innerText = data.bio;
+                        document.getElementById('profile-age-gender').innerText = `${data.age} years old, ${data.gender}`;
+                        document.getElementById('profile-interests').innerText = `Interests: ${data.interests}`;
+                    }
+                });
+        }
+
+        // Load the first profile on page load
+        window.onload = getProfile;
+    </script>
+</body>
+</html>
