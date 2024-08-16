@@ -20,7 +20,17 @@
         <div class="tinder--card">
             <img src="/static/download.png" alt="Image for {{ recommendation.title }}">
             <h3>Ana Evelyn</h3>
-            <p>{{ recommendation.bio }}</p>
+            <p style="font-size: 20px">{{ recommendation.bio }}</p>
+            <br>
+            <hr style="font-weight: bolder">
+            <div class="col" style="justify-content: left">
+            <p style="font-size: 15px">{{ recommendation.age }}</p>
+            <p style="font-size: 15px">{{ recommendation.location }}</p>
+            <p style="font-size: 15px">{{ recommendation.profession }}</p>
+            </div>
+            <br>
+            <button type="button" style="padding: 10px 10px; color: white; background: #4caf50; font-weight: bold; height: 30px; border: none; border-radius: 10px">Know More</button>
+
 
         </div>
         {% endfor %}
