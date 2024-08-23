@@ -4,7 +4,7 @@ from prettytable import PrettyTable
 
 from flaskr.models import User
 
-
+#Initiate a UserActivities class with necessary functions and attributes
 class UserActivities:
     def __init__(self, user_id, liked_users=None, disliked_users=None, matches=None):
         self.user_id = user_id

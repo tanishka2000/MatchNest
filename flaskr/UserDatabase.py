@@ -7,20 +7,20 @@ from prettytable import PrettyTable
 from Utils.utils import calculate_age, get_zodiac_sign, user_modifiable_fields
 from flaskr.models import User
 
-
+#Set up a UserDatabase class
 class UserDatabase:
     def __init__(self, db_file='./utils/users.db'):
         self.db_file = db_file
 
     def setup_database(self):
-        """Sets up the user database by creating the necessary table."""
+        #Sets up the user database by creating the necessary table.
         if os.path.exists(self.db_file):
             os.remove(self.db_file)
             print(f"Deleted existing database file: {self.db_file}")
 
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
-
+        #list all attributes' types
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,7 +70,7 @@ class UserDatabase:
 
 
     def insert_new_user(self, user: User) -> None:
-        """Inserts a new user into the database."""
+        #Inserts a new user into the database.
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
@@ -85,7 +85,7 @@ class UserDatabase:
         conn.close()
 
     def delete_account(self, user_id: int) -> None:
-        """Deletes a user from the database."""
+        #Deletes a user from the database.
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
@@ -95,22 +95,22 @@ class UserDatabase:
         for user_data in all_users:
             (current_user_id, _, _, _, _, _, _, _, _, _, _, _, _, _) = user_data
 
-            # First, remove the user's row from the user_activities table
+            #First, remove the user's row from the user_activities table
             cursor.execute('DELETE FROM user_activities WHERE user_id = ?', (current_user_id,))
 
-            # Next, update other users' liked_users, disliked_users, and matches lists to remove this user_id
+            #Next, update other users' liked_users, disliked_users, and matches lists to remove this user_id
             cursor.execute('SELECT user_id, liked_users, disliked_users, matches FROM user_activities')
             all_preferences = cursor.fetchall()
 
             for pref in all_preferences:
                 current_user_id, liked_users, disliked_users, matches = pref
 
-                # Convert comma-separated strings back to lists
+                #Convert comma-separated strings back to lists
                 liked_users_list = list(map(int, liked_users.split(','))) if liked_users else []
                 disliked_users_list = list(map(int, disliked_users.split(','))) if disliked_users else []
                 matches_list = list(map(int, matches.split(','))) if matches else []
 
-                # Remove the user_id from these lists if present
+                #Remove the user_id from these lists if present
                 if user_id in liked_users_list:
                     liked_users_list.remove(user_id)
                 if user_id in disliked_users_list:
@@ -118,19 +118,19 @@ class UserDatabase:
                 if user_id in matches_list:
                     matches_list.remove(user_id)
 
-                # Convert lists back to comma-separated strings
+                #Convert lists back to comma-separated strings
                 liked_users = ','.join(map(str, liked_users_list))
                 disliked_users = ','.join(map(str, disliked_users_list))
                 matches = ','.join(map(str, matches_list))
 
-                # Update the current user's preferences in the database
+                #Update the current user's preferences in the database
                 cursor.execute('''
                     UPDATE user_activities
                     SET liked_users = ?, disliked_users = ?, matches = ?
                     WHERE user_id = ?
                 ''', (liked_users, disliked_users, matches, current_user_id))
 
-            # Commit the changes
+            #Commit the changes
             conn.commit()
 
         cursor.execute('DELETE FROM users WHERE user_id = ?', (user_id,))
@@ -138,39 +138,39 @@ class UserDatabase:
         conn.close()
 
     def update_account(self, user: User) -> None:
-        """Updates a user's information in the database."""
+        #Updates a user's information in the database.
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
-        # Build the SQL query dynamically based on provided fields
-        # Create the base query and the list to hold query parameters
+        #Build the SQL query dynamically based on provided fields
+        #Create the base query and the list to hold query parameters
         update_query = "UPDATE users SET "
         update_params = []
 
-        # Dynamically build the query based on modifiable fields
+        #Dynamically build the query based on modifiable fields
         for field in user_modifiable_fields:
             value = getattr(user, field)
             if field == 'interests':
-                # Convert list to a comma-separated string for interests
+                #Convert list to a comma-separated string for interests
                 value = ','.join(value)
             update_query += f"{field} = ?, "
             update_params.append(value)
 
-        # Remove the trailing comma and space
+        #Remove the trailing comma and space
         update_query = update_query.rstrip(', ')
 
-        # Add the WHERE clause to update the correct user
+        #Add the WHERE clause to update the correct user
         update_query += " WHERE user_id = ?"
         update_params.append(user.user_id)
 
-        # Execute the update query
+        #Execute the update query
         cursor.execute(update_query, update_params)
 
         conn.commit()
         conn.close()
 
     def fetch_user(self, user_id: int) -> Union[User, None]:
-        """Fetches a user's information from the database."""
+        #Fetches a user's information from the database.
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
@@ -204,7 +204,7 @@ class UserDatabase:
         return None
 
     def fetch_all_users(self) -> List[User]:
-        """Fetches all users from the database."""
+        #Fetches all users from the database.
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
 
@@ -215,7 +215,7 @@ class UserDatabase:
         return all_users
 
     def display_users(self) -> None:
-        """Displays all existing users in a tabular form."""
+        #Displays all existing users in a tabular form.
         all_users = self.fetch_all_users()
         if all_users:
             table = PrettyTable()

@@ -2,7 +2,7 @@ from pydantic import BaseModel, ValidationError, Field, validator
 from typing import List, Optional
 from enum import Enum
 
-
+#Define the class gender with necessary attributes
 class Gender(str, Enum):
     MALE = "Male"
     FEMALE = "Female"
@@ -10,6 +10,7 @@ class Gender(str, Enum):
     OTHER = "Other"
     PREFER_NOT_TO_SAY = "Prefer not to say"
 
+#Define the class Options with necessary attributes
 class Options(str, Enum):
     NEVER = "Never"
     OCCASIONALLY = "Occasionally"
@@ -17,7 +18,7 @@ class Options(str, Enum):
     FREQUENTLY = "Frequently"
     ALWAYS = "Always"
 
-
+#Define the class ZodiacSign with necessary attributes
 class ZodiacSign(str, Enum):
     ARIES = "Aries"
     TAURUS = "Taurus"
@@ -32,7 +33,7 @@ class ZodiacSign(str, Enum):
     AQUARIUS = "Aquarius"
     PISCES = "Pisces"
 
-
+#Define the class MBTITypes with necessary attributes
 class MBTITypes(str, Enum):
     INTJ = "INTJ"
     INTP = "INTP"
@@ -51,12 +52,12 @@ class MBTITypes(str, Enum):
     ESTP = "ESTP"
     ESFP = "ESFP"
 
-
+#Define the class UserPreferenceFields with necessary attributes
 class UserPreferenceFields(BaseModel):
     age: List[int]
     gender: List[Gender]
 
-
+#Define the class UserDetails with necessary attributes
 class UserDetails(BaseModel):
     location: str
     smoking: Options
@@ -66,7 +67,7 @@ class UserDetails(BaseModel):
     mbti: MBTITypes
     height: int
 
-
+#Define the class UserIdentifiers with necessary attributes
 class UserIdentifiers(UserPreferenceFields):
     user_id: Optional[int] = Field(default=None, description="Unique ID for the user. Auto-incremented in the database.")
     name: str
@@ -75,7 +76,7 @@ class UserIdentifiers(UserPreferenceFields):
     gender: Gender
     profession: str
 
-
+#Define the class User(BaseModel) with necessary attributes
 class User(BaseModel):
     user_id: int
     name: str
@@ -91,6 +92,7 @@ class User(BaseModel):
     interests: List[str]
     mbti: MBTITypes
     height: int
+
 
 def get_user_input() -> UserIdentifiers:
     try:
