@@ -1,7 +1,7 @@
 import sqlite3
 from flaskr.models import User, UserActivitiesModel
 
-
+#Initiate a UserActivities class with necessary functions and attributes
 class UserActivities:
     def __init__(self, user_activities: UserActivitiesModel, db_file: str):
         self.db_file = db_file
