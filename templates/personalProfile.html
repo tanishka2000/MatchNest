@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Portfolio</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include custom CSS -->
+    <link rel="stylesheet" href="/static/main.css">
+    <!-- Wrapper CSS -->
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #28223F;
+            font-family: Montserrat, sans-serif;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h3 {
+            margin: 10px 0;
+        }
+
+        h6 {
+            margin: 5px 0;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 14px;
+            line-height: 21px;
+        }
+
+        .card-container {
+            background-color: #231E39;
+            border-radius: 5px;
+            box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+            color: #B3B8CD;
+            padding-top: 30px;
+            position: relative;
+            width: 350px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        .card-container .round {
+            border: 1px solid #03BFCB;
+            border-radius: 50%;
+            height: 20vh;
+            padding: 7px;
+        }
+
+        button.primary {
+            background-color: #03BFCB;
+            border: 1px solid #03BFCB;
+            border-radius: 3px;
+            color: #231E39;
+            font-family: Montserrat, sans-serif;
+            font-weight: 500;
+            padding: 10px 25px;
+        }
+
+        button.primary.ghost {
+            background-color: transparent;
+            color: #02899C;
+        }
+
+        .skills {
+            background-color: #1F1A36;
+            text-align: left;
+            padding: 15px;
+            margin-top: 30px;
+        }
+
+        .skills ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .skills ul li {
+            border: 1px solid #2D2747;
+            border-radius: 2px;
+            display: inline-block;
+            font-size: 12px;
+            margin: 0 7px 7px 0;
+            padding: 7px;
+        }
+
+        .data-user {
+	font-family: "Quicksand", sans-serif;
+  margin-bottom: 0;
+  cursor: pointer;
+  padding: 0;
+  list-style: none;
+  display: table;
+  width: 100.15%;
+}
+.data-user li {
+  margin: 0;
+  padding: 0;
+  width: 25%;
+  display: table-cell;
+  text-align: center;
+  border-left: 0.1em solid transparent;
+}
+.data-user li:first-child {
+  border-left: 0;
+}
+.data-user li:first-child a {
+  border-bottom-left-radius: 0.3rem;
+  }
+.data-user li:last-child a {
+  border-bottom-right-radius: 0.3rem;
+}
+.data-user li a, .data-user li strong {
+  display: block;
+}
+.data-user li {
+  padding: .93em 0;
+  color: #46494c;
+}
+.data-user li a strong, .data-user li a span {
+  font-weight: 600;
+  line-height: 1;
+}
+.data-user li a strong {
+  font-size: 2em;
+}
+.data-user li a span {
+  color: #717a7e;
+}
+.data-user li a:hover {
+  color: #3498db;
+}
+.data-user li a:hover span {
+  color: #3498db;
+}
+
+    </style>
+</head>
+<body>
+{% include 'base.html' %}
+<div class="card-container">
+    <!--src="https://randomuser.me/api/portraits/women/79.jpg"-->
+	<img class="round" src="/static/profile_pics/{{user.name}}.png" alt="user" />
+	<h3>{{ user.name }}<p style="font-size: x-small">Gender: {{ user.gender.value }}</p></h3>
+    <h6>{{ user.profession }}, <span style="font-style: italic; font-weight: lighter">{{ user.location }}</span></h6>
+    <p style="
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+    border-top: 2px solid white;
+    padding-top: 10px">
+        {{ user.bio }}
+    </p>
+    <ul class="data-user">
+        <li><a><strong style="font-size: medium">{{ user.age }}</strong>
+            <span style="font-size: small">Age</span></a></li>
+        <li><a><strong style="font-size: medium">{{ user.zodiac_sign.value }}</strong>
+            <span style="font-size: small">Zodiac</span></a></li>
+        <li><a><strong style="font-size: medium">{{ user.mbti.value }}</strong>
+            <span style="font-size: small">MBTI</span></a></li>
+        <li><a><strong style="font-size: medium">{{ user.height }}</strong>
+            <span style="font-size: small">Height</span></a></li>
+       </ul>
+        <ul class="data-user">
+            <li><a><strong style="font-size: medium">{{ user.smoking.value }}</strong>
+            <span style="font-size: small">Smoking</span></a></li>
+        <li><a><strong style="font-size: medium">{{ user.drinking.value }}</strong>
+            <span style="font-size: small">Drinking</span></a></li>
+        </ul>
+
+	<div class="skills">
+		<h6>Skills</h6>
+		<ul>
+            {% for interest in user.interests %}
+            <li>{{ interest }}</li>
+            {% endfor %}
+        </ul>
+	</div>
+    <div class="buttons">
+        <a href="/profile/edit/{{ user.user_id }}" class="btn btn-primary">Modify Profile</a>
+    </div>
+</div>
+
+</body>
+</html>

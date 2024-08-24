@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profiles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .profile-card {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .profile-card img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .profile-card h5 {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+{% include 'base.html' %}
+<div class="container">
+    <div class="row">
+        {% for matched_user in matched_users %}
+            <div class="col-md-4">
+                <div class="card profile-card">
+                    <img src="{{ matched_user.profile_pic }}" class="card-img-top" alt="Profile Picture">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ matched_user.name }}</h5>
+                        <p class="card-text">{{ matched_user.profession }}</p>
+                        <p class="card-text">{{ matched_user.location }}</p>
+                        <a href="/profile/{{ matched_user.user_id }}" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+            </div>
+            {% if loop.index % 3 == 0 %}
+                </div><div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
