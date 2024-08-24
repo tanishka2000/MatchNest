@@ -4,7 +4,6 @@ from flask import Flask, render_template, jsonify
 from pydantic import ValidationError
 
 from Utils.utils import get_zodiac_sign
-from flaskr.UserActivities import UserActivities
 from flaskr.UserDatabase import UserDatabase
 from flaskr.matching_algorithm import compute_compatibility_scores
 import pandas as pd
@@ -25,11 +24,10 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
-active_user = 79
+active_user = 1
 db_file = './utils/users.db'
 db = UserDatabase()
 current_user = UserActivitiesModel(user_id=active_user)
-user_activities = UserActivities(current_user, db_file)
 
 
 @app.route('/')
@@ -164,8 +162,8 @@ def display_profile(user_id=1):
 
 @app.route('/matches', methods=['GET', 'POST'])
 def display_matches():
-    matches = user_activities.view_matches(db_file)
-    print(matches, user_activities.disliked_users)
+    matches = db.fetch_matches(active_user)
+    print(matches)
     matched_users = []
 
     if matches:
@@ -184,9 +182,7 @@ def like_user():
         return jsonify({'error': 'Missing user ID'}), 400
 
     # Fetch the user to like
-    user_to_like = UserActivitiesModel(user_id=user_id)
-    user_activities.load_from_db()
-    user_activities.add_liked_user(user_to_like)
+    db.add_liked_users(current_user_id, user_id)
     return jsonify({'status': 'success'}), 200
 
 @app.route('/dislike', methods=['POST'])
@@ -200,9 +196,7 @@ def dislike_user():
         return jsonify({'error': 'Missing user ID'}), 400
 
     # Fetch the user to dislike
-    user_to_dislike = UserActivitiesModel(user_id=user_id)
-    user_activities.load_from_db()
-    user_activities.add_disliked_user(user_to_dislike)
+    db.add_disliked_users(current_user_id, user_id)
     return jsonify({'status': 'success'}), 200
 
 

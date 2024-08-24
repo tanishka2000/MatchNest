@@ -61,9 +61,9 @@ class UserPreferenceFields(BaseModel):
 
 class UserActivitiesModel(BaseModel):
     user_id: int
-    liked_users: Optional[list] = []
-    disliked_users: Optional[ list] = []
-    matches: Optional[list] = []
+    liked_users: Optional[str] = ""
+    disliked_users: Optional[ str] = ""
+    matches: Optional[str] = ""
 
 
 class UserDetails(BaseModel):

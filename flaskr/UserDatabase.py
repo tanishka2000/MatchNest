@@ -1,11 +1,12 @@
 import sqlite3
 import os
-from typing import Union, List
+from typing import Union, List, Optional
 
 from prettytable import PrettyTable
 
 from Utils.utils import calculate_age, get_zodiac_sign, user_modifiable_fields
-from flaskr.models import User, UserIdentifiers
+from flaskr.models import User, UserIdentifiers, UserActivitiesModel
+
 
 #Set up a UserDatabase class
 class UserDatabase:
@@ -233,3 +234,180 @@ class UserDatabase:
             print(table)
         else:
             print("No users found in the database.")
+
+    def fetch_user_activities(self, user_id: int) -> UserActivitiesModel:
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        cursor.execute('SELECT liked_users, disliked_users, matches FROM user_activities WHERE user_id = ?', (user_id,))
+        row = cursor.fetchone()
+        conn.close()
+
+        if row:
+            liked_users_str, disliked_users_str, matches_str = row
+            liked_users = list(map(int, liked_users_str.split(','))) if liked_users_str else []
+            disliked_users = list(map(int, disliked_users_str.split(','))) if disliked_users_str else []
+            matches = list(map(int, matches_str.split(','))) if matches_str else []
+
+            return UserActivitiesModel(
+                user_id=user_id,
+                liked_users=liked_users,
+                disliked_users=disliked_users,
+                matches=matches
+            )
+
+        return UserActivitiesModel(user_id=user_id, liked_users=[], disliked_users=[], matches=[])
+
+    def add_liked_users(self, current_user_id: int, user_to_like_user_id: int) -> None:
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        # Fetch current user's activities
+        cursor.execute('SELECT liked_users FROM user_activities WHERE user_id = ?', (current_user_id,))
+        row = cursor.fetchone()
+        if row:
+            liked_users_str = row[0]
+            liked_users = list(map(int, liked_users_str.split(','))) if liked_users_str else []
+        else:
+            liked_users = []
+
+        if user_to_like_user_id not in liked_users:
+            liked_users.append(user_to_like_user_id)
+            liked_users_str = ','.join(map(str, liked_users))
+
+            # Update current user's liked users
+            cursor.execute('''
+                UPDATE user_activities
+                SET liked_users = ?
+                WHERE user_id = ?
+            ''', (liked_users_str, current_user_id))
+
+            # Check if the liked user also likes the current user
+            cursor.execute('SELECT liked_users FROM user_activities WHERE user_id = ?', (user_to_like_user_id,))
+            row = cursor.fetchone()
+            if row:
+                liked_users_str = row[0]
+                liked_users = list(map(int, liked_users_str.split(','))) if liked_users_str else []
+
+                if current_user_id in liked_users:
+                    # Update matches for both users
+                    cursor.execute('SELECT matches FROM user_activities WHERE user_id = ?', (current_user_id,))
+                    row = cursor.fetchone()
+                    if row:
+                        matches_str = row[0]
+                        matches = list(map(int, matches_str.split(','))) if matches_str else []
+                        if user_to_like_user_id not in matches:
+                            matches.append(user_to_like_user_id)
+                            matches_str = ','.join(map(str, matches))
+                            cursor.execute('''
+                                UPDATE user_activities
+                                SET matches = ?
+                                WHERE user_id = ?
+                            ''', (matches_str, current_user_id))
+
+                    cursor.execute('SELECT matches FROM user_activities WHERE user_id = ?', (user_to_like_user_id,))
+                    row = cursor.fetchone()
+                    if row:
+                        matches_str = row[0]
+                        matches = list(map(int, matches_str.split(','))) if matches_str else []
+                        if current_user_id not in matches:
+                            matches.append(current_user_id)
+                            matches_str = ','.join(map(str, matches))
+                            cursor.execute('''
+                                UPDATE user_activities
+                                SET matches = ?
+                                WHERE user_id = ?
+                            ''', (matches_str, user_to_like_user_id))
+
+            conn.commit()
+        conn.close()
+
+    def add_disliked_users(self, current_user_id: int, user_to_dislike_user_id: int) -> None:
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        # Fetch current user's disliked users
+        cursor.execute('SELECT disliked_users FROM user_activities WHERE user_id = ?', (current_user_id,))
+        row = cursor.fetchone()
+        if row:
+            disliked_users_str = row[0]
+            disliked_users = list(map(int, disliked_users_str.split(','))) if disliked_users_str else []
+        else:
+            disliked_users = []
+
+        if user_to_dislike_user_id not in disliked_users:
+            disliked_users.append(user_to_dislike_user_id)
+            disliked_users_str = ','.join(map(str, disliked_users))
+
+            # Update current user's disliked users
+            cursor.execute('''
+                UPDATE user_activities
+                SET disliked_users = ?
+                WHERE user_id = ?
+            ''', (disliked_users_str, current_user_id))
+
+            conn.commit()
+        conn.close()
+
+    def get_user_by_id(self, user_id: int) -> Optional[User]:
+        """Helper method to get a user by ID."""
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM users WHERE user_id = ?', (user_id,))
+        row = cursor.fetchone()
+        conn.close()
+
+        if row:
+            (user_id, name, birth_date, age, gender, location, interests, smoking, drinking, zodiac_sign, mbti,
+             profession, height, bio, profile_pic) = row
+            interests_list = interests.split(',')
+
+            return User(
+                user_id=user_id,
+                name=name,
+                birth_date=birth_date,
+                age=age,
+                gender=gender,
+                location=location,
+                interests=interests_list,
+                smoking=smoking,
+                drinking=drinking,
+                zodiac_sign=zodiac_sign,
+                mbti=mbti,
+                profession=profession,
+                height=height,
+                bio=bio,
+                profile_pic=profile_pic
+            )
+        return None
+
+    def fetch_matches(self, user_id: int) -> List[User]:
+        conn = sqlite3.connect(self.db_file)
+        cursor = conn.cursor()
+
+        # Fetch the list of matches for the given user_id
+        cursor.execute('SELECT matches FROM user_activities WHERE user_id = ?', (user_id,))
+        row = cursor.fetchone()
+        conn.close()
+
+        if row:
+            matches_str = row[0]
+            if matches_str:
+                matches_ids = list(map(int, matches_str.split(',')))
+
+                # Retrieve detailed information for each matched user
+                conn = sqlite3.connect(self.db_file)
+                cursor = conn.cursor()
+                cursor.execute('SELECT user_id FROM users WHERE user_id IN (' + ','.join('?' * len(matches_ids)) + ')',
+                               matches_ids)
+                matched_user_ids = cursor.fetchall()
+                conn.close()
+
+                matched_users = []
+                for (match_id,) in matched_user_ids:
+                    user = self.get_user_by_id(match_id)
+                    if user:
+                        matched_users.append(user)
+
+                return matched_users
+        return []
