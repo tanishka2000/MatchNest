@@ -1,9 +1,11 @@
 # Setup the database and create 100 users
 import random
 
+from Utils.generate_profile_pics import save_avatars
+from app import calculate_zodiac
 from flaskr.UserDatabase import UserDatabase
 from Utils.constants import LOCATIONS, INTERESTS_POOL, MBTI_POOL, PROFESSION_POOL, BIO_POOL
-from Utils.utils import random_birth_date
+from Utils.utils import random_birth_date, calculate_age, get_zodiac_sign
 from flaskr.models import User, Gender, Options
 
 db = UserDatabase()
@@ -22,11 +24,15 @@ for i in range(1, 101):
     profession = random.choice(PROFESSION_POOL)
     height = random.randint(140, 200)
     bio = random.choice(BIO_POOL)
-
+    profile_pic = save_avatars(name, gender)
+    age = calculate_age(birth_date)
+    zodiac_sign = get_zodiac_sign(birth_date)
     user = User(
         user_id=i,
         name=name,
         birth_date=birth_date,
+        age=age,
+        zodiac_sign=zodiac_sign,
         gender=gender,
         location=location,
         interests=interests,
@@ -35,6 +41,7 @@ for i in range(1, 101):
         drinking=drinking,
         profession=profession,
         height=height,
-        bio=bio)
+        bio=bio,
+        profile_pic=profile_pic)
 
     db.insert_new_user(user)

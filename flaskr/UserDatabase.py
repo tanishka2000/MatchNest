@@ -5,7 +5,7 @@ from typing import Union, List
 from prettytable import PrettyTable
 
 from Utils.utils import calculate_age, get_zodiac_sign, user_modifiable_fields
-from flaskr.models import User
+from flaskr.models import User, UserIdentifiers
 
 
 class UserDatabase:
@@ -32,11 +32,12 @@ class UserDatabase:
                 interests TEXT,
                 smoking TEXT,
                 drinking TEXT,
-                constellation TEXT,
+                zodiac_sign TEXT,
                 mbti TEXT,
                 profession TEXT,
                 height INTEGER,
-                bio TEXT
+                bio TEXT,
+                profile_pic TEXT
             )
         ''')
 
@@ -49,7 +50,7 @@ class UserDatabase:
                         interests TEXT,
                         smoking TEXT,
                         drinking TEXT,
-                        constellation TEXT,
+                        zodiac_sign TEXT,
                         mbti TEXT,
                         height INTEGER
                     )
@@ -75,11 +76,11 @@ class UserDatabase:
         cursor = conn.cursor()
 
         cursor.execute('''
-            INSERT INTO users (name, birth_date, age, gender, location, interests, smoking, drinking, constellation, mbti, profession, height, bio)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO users (name, birth_date, age, gender, location, interests, smoking, drinking, zodiac_sign, mbti, profession, height, bio, profile_pic)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (user.name, user.birth_date, calculate_age(user.birth_date), user.gender, user.location,
               ','.join(user.interests), user.smoking, user.drinking, get_zodiac_sign(user.birth_date), user.mbti,
-              user.profession, user.height, user.bio))
+              user.profession, user.height, user.bio, user.profile_pic))
 
         conn.commit()
         conn.close()
@@ -137,7 +138,7 @@ class UserDatabase:
         conn.commit()
         conn.close()
 
-    def update_account(self, user: User) -> None:
+    def update_account(self, user: UserIdentifiers) -> None:
         """Updates a user's information in the database."""
         conn = sqlite3.connect(self.db_file)
         cursor = conn.cursor()
@@ -179,8 +180,8 @@ class UserDatabase:
         conn.close()
 
         if user_data:
-            (user_id, name, birth_date, age, gender, location, interests, smoking, drinking, constellation, mbti,
-             profession, height, bio) = user_data
+            (user_id, name, birth_date, age, gender, location, interests, smoking, drinking, zodiac_sign, mbti,
+             profession, height, bio, profile_pic) = user_data
 
             interests = interests.split(',')
 
@@ -194,11 +195,12 @@ class UserDatabase:
                 interests=interests,
                 smoking=smoking,
                 drinking=drinking,
-                constellation=constellation,
+                zodiac_sign=zodiac_sign,
                 mbti=mbti,
                 profession=profession,
                 height=height,
-                bio=bio
+                bio=bio,
+                profile_pic=profile_pic
             )
 
         return None
@@ -221,8 +223,8 @@ class UserDatabase:
             table = PrettyTable()
             table.field_names = [
                 "User ID", "Name", "Birth Date", "Age", "Gender", "Location", "Interests",
-                "Smoking", "Drinking", "Constellation", "MBTI", "Profession", "Height",
-                "Bio"
+                "Smoking", "Drinking", "Zodiac Sign", "MBTI", "Profession", "Height",
+                "Bio", "Profile Pic"
             ]
 
             for user_data in all_users:

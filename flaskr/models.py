@@ -57,23 +57,31 @@ class UserPreferenceFields(BaseModel):
     gender: List[Gender]
 
 
+class UserActivitiesModel(BaseModel):
+    user_id: int
+    liked_users: Optional[list] = []
+    disliked_users: Optional[ list] = []
+    matches: Optional[list] = []
+
+
 class UserDetails(BaseModel):
     location: str
     smoking: Options
     drinking: Options
-    hobbies: List[str]
-    zodiac_sign: ZodiacSign
+    interests: List[str]
+    zodiac_sign: Optional[ZodiacSign]
     mbti: MBTITypes
     height: int
 
 
-class UserIdentifiers(UserPreferenceFields):
+class UserIdentifiers(UserDetails):
     user_id: Optional[int] = Field(default=None, description="Unique ID for the user. Auto-incremented in the database.")
     name: str
     bio: str
-    dob: str
+    birth_date: str
     gender: Gender
     profession: str
+    profile_pic: str = ""
 
 
 class User(BaseModel):
@@ -86,11 +94,12 @@ class User(BaseModel):
     location: str
     smoking: Options
     age: Optional[int]
-    constellation: Optional[ZodiacSign]
+    zodiac_sign: Optional[ZodiacSign]
     drinking: Options
     interests: List[str]
     mbti: MBTITypes
     height: int
+    profile_pic: str = ""
 
 def get_user_input() -> UserIdentifiers:
     try:
@@ -98,13 +107,14 @@ def get_user_input() -> UserIdentifiers:
             "user_id": int(input("Enter User ID: ")),
             "name": input("Enter Name: "),
             "bio": input("Enter Bio: "),
+            "profile_pic": input("Enter path to your profile pic: "),
             "birth_date": input("Enter Date of Birth (YYYY-MM-DD): "),
             "gender": input(f"Enter Gender ({', '.join([g.value for g in Gender])}): "),
             "profession": input("Enter Profession: "),
             "location": input("Enter Location: "),
             "smoking": input(f"Enter Smoking Habit ({', '.join([o.value for o in Options])}): "),
             "drinking": input(f"Enter Drinking Habit ({', '.join([o.value for o in Options])}): "),
-            "hobbies": input("Enter Hobbies (comma-separated): ").split(','),
+            "interests": input("Enter Interests (comma-separated): ").split(','),
             "mbti": input(f"Enter MBTI ({', '.join([mbti.value for mbti in MBTITypes])}): "),
             "height": int(input("Enter Height (in cm): "))
         }

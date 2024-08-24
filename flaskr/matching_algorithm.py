@@ -13,8 +13,8 @@ data = db.fetch_all_users()
 # Define the column names based on the order of the tuple elements
 columns = [
     'user_id', 'name', 'birth_date', 'age', 'gender', 'location',
-    'interests', 'smoking', 'drinking', 'constellation', 'mbti',
-    'profession', 'height', 'bio'
+    'interests', 'smoking', 'drinking', 'zodiac_sign', 'mbti',
+    'profession', 'height', 'bio', 'profile_pic'
 ]
 
 # Convert the list of tuples to a DataFrame
@@ -59,7 +59,7 @@ def compute_compatibility_scores(logged_in_user, users_df):
     # Calculate zodiac compatibility score
     potential_matches['zodiac_score'] = potential_matches.apply(
         lambda row: get_zodiac_compatibility(
-            logged_in_user.constellation, logged_in_user.constellation,
+            logged_in_user.zodiac_sign, logged_in_user.zodiac_sign,
         ), axis=1
     )
 

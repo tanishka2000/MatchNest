@@ -1,7 +1,7 @@
 import random
 from datetime import datetime, timedelta
 
-user_modifiable_fields = ['bio', 'img', 'gender', 'profession', 'smoking', 'drinking', 'interests', 'mbti']
+user_modifiable_fields = ['bio', 'gender', 'profession', 'smoking', 'drinking', 'interests', 'mbti', 'profile_pic']
 
 def random_birth_date(start_year=1970, end_year=2006):
     # Randomly select a year between start_year and end_year

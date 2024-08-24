@@ -2,62 +2,49 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
+  <title>SIGN UP</title>
     <link href="/static/main.css" rel="stylesheet">
 
-    <!--script src="/static/main.js"></script-->
+    <script src="/static/main.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="align">
-<div class="area" >
-     <div class="grid">
-       <h1 style="color: white; font-weight: bolder; font-size: 35px">
-        MatchNest Login
-      </h1>
-    <form action="/dashboard" method="POST" class="form login">
-
-      <div class="form__field">
-        <label for="login__username"><svg class="icon">
-            <use xlink:href="#icon-user"></use>
-          </svg><span class="hidden">Username</span></label>
-        <input autocomplete="username" id="login__username" type="text" name="username" class="form__input" placeholder="Username" required>
+<body>
+<div class="scroll-down">Get matched with your Nest
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <path d="M16 3C8.832031 3 3 8.832031 3 16s5.832031 13 13 13 13-5.832031 13-13S23.167969 3 16 3zm0 2c6.085938 0 11 4.914063 11 11 0 6.085938-4.914062 11-11 11-6.085937 0-11-4.914062-11-11C5 9.914063 9.914063 5 16 5zm-1 4v10.28125l-4-4-1.40625 1.4375L16 23.125l6.40625-6.40625L21 15.28125l-4 4V9z"/>
+</svg></div>
+<div class="container"></div>
+<div class="modal">
+  <div class="modal-container">
+    <div class="modal-left">
+      <h1 class="modal-title">Welcome!</h1>
+      <p class="modal-desc">Where hearts find their Home</p>
+      <div class="input-block">
+        <label for="email" class="input-label">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email">
       </div>
-
-      <div class="form__field">
-        <label for="login__password"><svg class="icon">
-            <use xlink:href="#icon-lock"></use>
-          </svg><span class="hidden">Password</span></label>
-        <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
+      <div class="input-block">
+        <label for="password" class="input-label">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password">
       </div>
-
-      <div class="form__field">
-        <input type="submit" value="Sign In">
+      <div class="modal-buttons">
+        <a href="" class="">Forgot your password?</a>
+        <button class="input-button">Login</button>
       </div>
-
-    </form>
-
-    <p class="text--center">Not a member? <a href="/signup">Sign up now</a> <svg class="icon">
-        <use xlink:href="#icon-arrow-right"></use>
-      </svg></p>
-
+      <p class="sign-up">Don't have an account? <a href="/signup">Sign up now</a></p>
+    </div>
+    <div class="modal-right">
+      <img src="/static/login2.jpg" alt="">
+    </div>
+    <button class="icon-button close-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+    <path d="M 25 3 C 12.86158 3 3 12.86158 3 25 C 3 37.13842 12.86158 47 25 47 C 37.13842 47 47 37.13842 47 25 C 47 12.86158 37.13842 3 25 3 z M 25 5 C 36.05754 5 45 13.94246 45 25 C 45 36.05754 36.05754 45 25 45 C 13.94246 45 5 36.05754 5 25 C 5 13.94246 13.94246 5 25 5 z M 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.980469 15.990234 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 z"></path>
+</svg>
+      </button>
   </div>
-
-  <svg xmlns="http://www.w3.org/2000/svg" class="icons">
-    <symbol id="icon-arrow-right" viewBox="0 0 1792 1792">
-      <path d="M1600 960q0 54-37 91l-651 651q-39 37-91 37-51 0-90-37l-75-75q-38-38-38-91t38-91l293-293H245q-52 0-84.5-37.5T128 1024V896q0-53 32.5-90.5T245 768h704L656 474q-38-36-38-90t38-90l75-75q38-38 90-38 53 0 91 38l651 651q37 35 37 90z" />
-    </symbol>
-    <symbol id="icon-lock" viewBox="0 0 1792 1792">
-      <path d="M640 768h512V576q0-106-75-181t-181-75-181 75-75 181v192zm832 96v576q0 40-28 68t-68 28H416q-40 0-68-28t-28-68V864q0-40 28-68t68-28h32V576q0-184 132-316t316-132 316 132 132 316v192h32q40 0 68 28t28 68z" />
-    </symbol>
-    <symbol id="icon-user" viewBox="0 0 1792 1792">
-      <path d="M1600 1405q0 120-73 189.5t-194 69.5H459q-121 0-194-69.5T192 1405q0-53 3.5-103.5t14-109T236 1084t43-97.5 62-81 85.5-53.5T538 832q9 0 42 21.5t74.5 48 108 48T896 971t133.5-21.5 108-48 74.5-48 42-21.5q61 0 111.5 20t85.5 53.5 62 81 43 97.5 26.5 108.5 14 109 3.5 103.5zm-320-893q0 159-112.5 271.5T896 896 624.5 783.5 512 512t112.5-271.5T896 128t271.5 112.5T1280 512z" />
-    </symbol>
-  </svg>
-
-
-    </div >
-
+  <button class="modal-button">Click here to login</button>
+</div>
 </body>
 
 </html>

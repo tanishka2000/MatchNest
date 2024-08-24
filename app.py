@@ -1,4 +1,10 @@
-from flask import Flask, render_template
+from datetime import datetime
+
+from flask import Flask, render_template, jsonify
+from pydantic import ValidationError
+
+from Utils.utils import get_zodiac_sign
+from flaskr.UserActivities import UserActivities
 from flaskr.UserDatabase import UserDatabase
 from flaskr.matching_algorithm import compute_compatibility_scores
 import pandas as pd
@@ -6,20 +12,25 @@ from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 import os
 
-app = Flask(__name__)
-
-# Configurations
-UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
+from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
 
 app = Flask(__name__, template_folder='templates')
-active_user = 1
+
+# Configuration
+app.config['UPLOAD_FOLDER'] = 'static/profile_pics'
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Helper function to check allowed file extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+
+active_user = 79
+db_file = './utils/users.db'
 db = UserDatabase()
+current_user = UserActivitiesModel(user_id=active_user)
+user_activities = UserActivities(current_user, db_file)
+
 
 @app.route('/')
 def index():
@@ -44,8 +55,8 @@ def dashboard():
     all_users_df = db.fetch_all_users()
     columns = [
         'user_id', 'name', 'birth_date', 'age', 'gender', 'location',
-        'interests', 'smoking', 'drinking', 'constellation', 'mbti',
-        'profession', 'height', 'bio'
+        'interests', 'smoking', 'drinking', 'zodiac_sign', 'mbti',
+        'profession', 'height', 'bio', 'profile_pic'
     ]
 
     # Convert the list of tuples to a DataFrame
@@ -79,6 +90,120 @@ def upload_file():
 
     return render_template('upload.html')
 
+
+@app.route('/profile/edit/<int:user_id>', methods=['GET', 'POST'])
+def edit_profile(user_id=1):
+    user = db.fetch_user(user_id)
+
+    if not user:
+        return jsonify({"success": False, "error": "User not found"}), 404
+
+    if request.method == 'POST':
+        if 'profile_pic' in request.files:
+            file = request.files['profile_pic']
+            print(file)
+            if file and allowed_file(file.filename):
+                # Secure the filename and save it
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                file.save(file_path)
+                print("FILE:", file_path, filename)
+                user.profile_pic = filename
+
+        updated_data = {
+            "user_id": user.user_id,
+            "name": request.form.get('name', user.name),
+            "profile_pic": user.profile_pic,
+            "bio": request.form.get('bio', user.bio),
+            "birth_date": request.form.get('birth_date', user.birth_date),
+            "zodiac_sign": request.form.get('zodiac_sign', user.zodiac_sign),
+            "gender": request.form.get('gender', user.gender),
+            "profession": request.form.get('profession', user.profession),
+            "location": request.form.get('location', user.location),
+            "smoking": request.form.get('smoking', user.smoking),
+            "drinking": request.form.get('drinking', user.drinking),
+            "interests": request.form.get('interests').split(',') if request.form.get('interests') else user.interests,
+            "mbti": request.form.get('mbti', user.mbti),
+            "height": int(request.form.get('height', user.height)),
+        }
+
+        try:
+            updated_user = UserIdentifiers(**updated_data)
+            db.update_account(updated_user)
+            return jsonify({"success": True})
+        except ValidationError as e:
+            return jsonify({"success": False, "error": str(e)}), 400
+
+    return render_template('registerProfile.html',
+                           user=user,
+                           Gender=Gender,
+                           Options=Options,
+                           ZodiacSign=ZodiacSign,
+                           MBTITypes=MBTITypes)
+
+
+@app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
+def display_profile(user_id=1):
+    user = db.fetch_user(user_id)
+
+    if not user:
+        return "User not found", 404
+
+    if request.method == 'POST':
+        if 'profile_pic' not in request.files:
+            return redirect(request.url)
+
+        try:
+            return redirect(url_for('display_profile', user_id=user_id))
+        except ValidationError as e:
+            return f"Error: {e}", 400
+
+    return render_template('personalProfile.html',
+                           user=user)
+
+
+@app.route('/matches', methods=['GET', 'POST'])
+def display_matches():
+    matches = user_activities.view_matches(db_file)
+    print(matches, user_activities.disliked_users)
+    matched_users = []
+
+    if matches:
+        matched_users = [db.fetch_user(matched_id) for matched_id in matches]
+    return render_template('viewMatches.html',
+                           matched_users=matched_users)
+
+@app.route('/like', methods=['POST'])
+def like_user():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    # Assuming current_user_id is retrieved from session or request
+    current_user_id = 1  # Replace with actual user ID
+
+    if not user_id:
+        return jsonify({'error': 'Missing user ID'}), 400
+
+    # Fetch the user to like
+    user_to_like = UserActivitiesModel(user_id=user_id)
+    user_activities.load_from_db()
+    user_activities.add_liked_user(user_to_like)
+    return jsonify({'status': 'success'}), 200
+
+@app.route('/dislike', methods=['POST'])
+def dislike_user():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    # Assuming current_user_id is retrieved from session or request
+    current_user_id = 1  # Replace with actual user ID
+
+    if not user_id:
+        return jsonify({'error': 'Missing user ID'}), 400
+
+    # Fetch the user to dislike
+    user_to_dislike = UserActivitiesModel(user_id=user_id)
+    user_activities.load_from_db()
+    user_activities.add_disliked_user(user_to_dislike)
+    return jsonify({'status': 'success'}), 200
 
 
 if __name__ == '__main__':
