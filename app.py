@@ -1,20 +1,17 @@
 import hashlib
+import os
+import secrets
 import sqlite3
-from datetime import datetime
 
-from flask import Flask, render_template, jsonify, session, flash
-from pydantic import ValidationError
-
-from Utils.utils import get_zodiac_sign
-from flaskr.UserDatabase import UserDatabase
-from flaskr.matching_algorithm import compute_compatibility_scores
 import pandas as pd
 from flask import Flask, request, redirect, url_for, render_template
+from flask import jsonify, session, flash
+from pydantic import ValidationError
 from werkzeug.utils import secure_filename
-import os
 
+from flaskr.UserDatabase import UserDatabase
+from flaskr.matching_algorithm import compute_compatibility_scores
 from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
-import secrets
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = secrets.token_hex(16)
@@ -22,6 +19,7 @@ app.secret_key = secrets.token_hex(16)
 # Configuration
 app.config['UPLOAD_FOLDER'] = 'static/profile_pics'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
 
 # Helper function to check allowed file extensions
 def allowed_file(filename):
@@ -120,6 +118,7 @@ def logout():
 
 def fetch_logged_in_user_id():
     return session.get('user_id', 1)
+
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
@@ -251,6 +250,7 @@ def display_matches():
     return render_template('viewMatches.html',
                            matched_users=matched_users)
 
+
 @app.route('/like', methods=['POST'])
 def like_user():
     data = request.get_json()
@@ -264,6 +264,7 @@ def like_user():
     # Fetch the user to like
     db.add_liked_users(current_user_id, user_id)
     return jsonify({'status': 'success'}), 200
+
 
 @app.route('/dislike', methods=['POST'])
 def dislike_user():

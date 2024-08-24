@@ -89,18 +89,18 @@ class UserIdentifiers(UserDetails):
 class User(BaseModel):
     user_id: int
     name: str
-    bio: str
-    birth_date: str
-    gender: Gender
-    profession: str
-    location: str
-    smoking: Options
-    age: Optional[int]
-    zodiac_sign: Optional[ZodiacSign]
-    drinking: Options
-    interests: List[str]
-    mbti: MBTITypes
-    height: int
+    bio: str = ""
+    birth_date: str = ""
+    gender: Gender = None
+    profession: str = ""
+    location: str = ""
+    smoking: Options = None
+    age: Optional[int] = None
+    zodiac_sign: Optional[ZodiacSign] = None
+    drinking: Options = None
+    interests: List[str] = []
+    mbti: MBTITypes = None
+    height: int = 0
     profile_pic: str = ""
 
 

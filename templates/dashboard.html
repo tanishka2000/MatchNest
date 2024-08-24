@@ -18,7 +18,7 @@
         <div class="tinder--cards">
             {% for recommendation in recommendations %}
                 <div class="tinder--card" data-user-id="{{ recommendation.user_id }}">
-                    <img src="/static/profile_pics/{{recommendation.profile_pic" width="200" alt="Image for {{ recommendation.title }}">
+                    <img src="/static/profile_pics/{{recommendation.profile_pic}}" width="200" alt="Image for {{ recommendation.title }}">
                     <h3>{{ recommendation.name }}</h3>
                     <p style="font-size: 20px">{{ recommendation.bio }}</p>
                     <br>
