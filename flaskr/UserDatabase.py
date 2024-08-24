@@ -10,7 +10,7 @@ from flaskr.models import User, UserIdentifiers, UserActivitiesModel
 
 #Set up a UserDatabase class
 class UserDatabase:
-    def __init__(self, db_file='./utils/users.db'):
+    def __init__(self, db_file='./Utils/users.db'):
         self.db_file = db_file
 
     def setup_database(self):
