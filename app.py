@@ -216,7 +216,7 @@ def edit_profile(user_id=1):
                            Gender=Gender,
                            Options=Options,
                            ZodiacSign=ZodiacSign,
-                           MBTITypes=MBTITypes)
+                           MBTITypes=MBTITypes, fetch_logged_in_user_id=fetch_logged_in_user_id)
 
 
 @app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
