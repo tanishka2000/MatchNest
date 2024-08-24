@@ -7,5 +7,6 @@
     <file url="file://$PROJECT_DIR$/flaskr/UserDatabase.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flaskr/db.py" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/flaskr/matching_algorithm.py" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/flaskr/storage.py" dialect="GenericSQL" />
   </component>
 </project>

@@ -17,6 +17,8 @@ def random_birth_date(start_year=1970, end_year=2006):
 
 def calculate_age(dob):
     """Calculates age based on date of birth."""
+    if not dob:
+        return 0
     dob = datetime.strptime(dob, '%Y-%m-%d')
     today = datetime.today()
     age = today.year - dob.year
@@ -26,6 +28,8 @@ def calculate_age(dob):
 
 def get_zodiac_sign(dob):
     """Determines the zodiac sign based on date of birth."""
+    if not dob:
+        return ""
     dob = datetime.strptime(dob, "%Y-%m-%d")
     zodiac_signs = [
         ("Capricorn", (datetime(dob.year, 12, 22), datetime(dob.year, 1, 19))),

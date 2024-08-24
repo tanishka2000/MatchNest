@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 from flaskr.UserDatabase import UserDatabase
 from flaskr.matching_algorithm import compute_compatibility_scores
 from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
+from flaskr.storage import init_user_cred
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = secrets.token_hex(16)
@@ -27,6 +28,7 @@ def allowed_file(filename):
 
 
 active_user = 1
+user_cred_db_file = './storage/user_cred.db'
 db_file = './utils/users.db'
 db = UserDatabase()
 current_user = UserActivitiesModel(user_id=active_user)
@@ -35,12 +37,6 @@ current_user = UserActivitiesModel(user_id=active_user)
 @app.route('/')
 def index():
     return render_template('index.html')
-
-
-def get_db_connection():
-    conn = sqlite3.connect(db_file)
-    conn.row_factory = sqlite3.Row
-    return conn
 
 
 def hash_password(password):
@@ -55,33 +51,37 @@ def home():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form.get('username')
+        name = request.form.get('name')
         email = request.form.get('email')
         password = hash_password(request.form.get('password'))
+        print(name, email, password)
+        if not name or not email or not password:
+            return jsonify({'success': False, 'error': 'Missing data 1'}), 400
 
-        conn = get_db_connection()
+        conn = sqlite3.connect(user_cred_db_file)
         cursor = conn.cursor()
 
-        cursor.execute('SELECT MAX(user_id) FROM users')
-        max_user_id = cursor.fetchone()[0]
-        new_user_id = (max_user_id + 1) if max_user_id else 1
+        last_user_id = db.get_last_user_id()
+        new_user_id = last_user_id + 1
 
         try:
             cursor.execute('INSERT INTO user_cred (user_id, name, email, password) VALUES (?, ?, ?, ?)',
                            (new_user_id, name, email, password))
             conn.commit()
+            response = {'success': True, 'user_id': new_user_id}
             db.insert_new_user(User(
                 user_id=new_user_id,
                 name=name
             ))
-            flash('Registration successful!')
-            return redirect(url_for('login'))
-
+            return jsonify(response)
         except sqlite3.IntegrityError:
-            flash('Email already registered.')
-
-        conn.close()
-
+            response = {'success': False, 'error': 'Email already registered.'}
+            return jsonify(response)
+        except Exception as e:
+            response = {'success': False, 'error': str(e)}
+            return jsonify(response)
+        finally:
+            conn.close()
     return render_template('signup.html', fetch_logged_in_user_id=fetch_logged_in_user_id)
 
 
@@ -91,13 +91,13 @@ def login():
         email = request.form['email']
         password = hash_password(request.form['password'])
 
-        conn = get_db_connection()
+        conn = sqlite3.connect(user_cred_db_file)
         cursor = conn.cursor()
         cursor.execute('SELECT user_id FROM user_cred WHERE email = ? AND password = ?', (email, password))
         user = cursor.fetchone()
 
         if user:
-            session['user_id'] = user['user_id']
+            session['user_id'] = user[0]
             flash('Login successful!', 'info')
             return jsonify({"success": True})
 
@@ -117,6 +117,7 @@ def logout():
 
 
 def fetch_logged_in_user_id():
+    print(session.get('user_id', 1))
     return session.get('user_id', 1)
 
 
@@ -139,7 +140,7 @@ def dashboard():
     df = pd.DataFrame(all_users_df, columns=columns)
     potential_matches = compute_compatibility_scores(logged_in_user, df)
     recommendations = potential_matches.head(25).to_dict(orient='records')
-    return render_template('dashboard.html', recommendations = recommendations)
+    return render_template('dashboard.html', recommendations=recommendations)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -283,4 +284,5 @@ def dislike_user():
 
 if __name__ == '__main__':
     db = UserDatabase()
+    init_user_cred(user_cred_db_file)
     app.run(host="0.0.0.0", port=8000, debug=True)

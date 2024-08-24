@@ -206,6 +206,27 @@ class UserDatabase:
 
         return None
 
+
+    def get_last_user_id(self):
+        try:
+            # Connect to the SQLite database
+            conn = sqlite3.connect(self.db_file)
+            cursor = conn.cursor()
+
+            # Execute the query to get the maximum user_id
+            cursor.execute('SELECT MAX(user_id) FROM users')
+            max_user_id = cursor.fetchone()[0]
+
+            # Close the database connection
+            conn.close()
+
+            # Return the result, default to 0 if no users
+            return max_user_id if max_user_id is not None else 0
+
+        except sqlite3.Error as e:
+            print(f"Database error: {e}")
+            return None
+
     def fetch_all_users(self) -> List[User]:
         #Fetches all users from the database.
         conn = sqlite3.connect(self.db_file)
