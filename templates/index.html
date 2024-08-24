@@ -20,6 +20,7 @@
     <div class="modal-left">
       <h1 class="modal-title">Welcome!</h1>
       <p class="modal-desc">Where hearts find their Home</p>
+      <form id="login-form" method="POST">
       <div class="input-block">
         <label for="email" class="input-label">Email</label>
         <input type="email" name="email" id="email" placeholder="Email">
@@ -30,9 +31,10 @@
       </div>
       <div class="modal-buttons">
         <a href="" class="">Forgot your password?</a>
-        <button class="input-button">Login</button>
+        <button class="input-button" formaction="/login">Login</button>
       </div>
       <p class="sign-up">Don't have an account? <a href="/signup">Sign up now</a></p>
+      </form>
     </div>
     <div class="modal-right">
       <img src="/static/5667698.jpg" alt="">
@@ -45,6 +47,32 @@
   </div>
   <button class="modal-button">Click here to login</button>
 </div>
+<script type="text/javascript">
+  // Handle form submission
+    $('#login-form').on('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      var formData = new FormData(this); // Create FormData object to handle file uploads
+
+      $.ajax({
+        url: '/login',  // Flask will dynamically generate the correct URL
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+          if (response.success) {
+            window.location.href = '/dashboard'; // Redirect to profile page
+          } else {
+            alert('Error updating profile: ' + (response.error || 'Please try again.'));
+          }
+        },
+        error: function () {
+          alert('An unexpected error occurred. Please try again.');
+        }
+      });
+    });
+</script>
 </body>
 
 </html>

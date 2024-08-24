@@ -1,6 +1,8 @@
+import hashlib
+import sqlite3
 from datetime import datetime
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, session, flash
 from pydantic import ValidationError
 
 from Utils.utils import get_zodiac_sign
@@ -34,13 +36,78 @@ current_user = UserActivitiesModel(user_id=active_user)
 def index():
     return render_template('index.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+
+def get_db_connection():
+    conn = sqlite3.connect(db_file)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+@app.route('/')
+def home():
     return render_template('index.html')
 
+
 @app.route('/signup', methods=['GET', 'POST'])
-def submit_details():
+def signup():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        password = hash_password(request.form['password'])
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute('INSERT INTO user_cred (name, email, password) VALUES (?, ?, ?)',
+                           (name, email, password))
+            conn.commit()
+            flash('Registration successful!')
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            flash('Email already registered.')
+
+        conn.close()
+
     return render_template('signup.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = hash_password(request.form['password'])
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute('SELECT user_id FROM user_cred WHERE email = ? AND password = ?', (email, password))
+        user = cursor.fetchone()
+
+        if user:
+            session['user_id'] = user['user_id']
+            flash('Login successful!')
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid email or password.')
+
+        conn.close()
+
+    return render_template('index.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('You have been logged out.')
+    return redirect(url_for('login'))
+
+
+def fetch_logged_in_user_id():
+    return session.get('user_id')
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
