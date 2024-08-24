@@ -156,7 +156,7 @@
 {% include 'base.html' %}
 <div class="card-container">
     <!--src="https://randomuser.me/api/portraits/women/79.jpg"-->
-	<img class="round" src="/static/profile_pics/{{user.name}}.png" alt="user" />
+	<img class="round" src="/static/profile_pics/{{user.profile_pic}}" alt="user" />
 	<h3>{{ user.name }}<p style="font-size: x-small">Gender: {{ user.gender.value }}</p></h3>
     <h6>{{ user.profession }}, <span style="font-style: italic; font-weight: lighter">{{ user.location }}</span></h6>
     <p style="
@@ -192,7 +192,7 @@
             {% endfor %}
         </ul>
 	</div>
-    <div class="buttons">
+    <div class="buttons" style="margin: 5%">
         <a href="/profile/edit/{{ user.user_id }}" class="btn btn-primary">Modify Profile</a>
     </div>
 </div>

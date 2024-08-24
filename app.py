@@ -14,8 +14,10 @@ from werkzeug.utils import secure_filename
 import os
 
 from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
+import secrets
 
 app = Flask(__name__, template_folder='templates')
+app.secret_key = secrets.token_hex(16)
 
 # Configuration
 app.config['UPLOAD_FOLDER'] = 'static/profile_pics'
@@ -55,25 +57,34 @@ def home():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = hash_password(request.form['password'])
+        name = request.form.get('username')
+        email = request.form.get('email')
+        password = hash_password(request.form.get('password'))
 
         conn = get_db_connection()
         cursor = conn.cursor()
 
+        cursor.execute('SELECT MAX(user_id) FROM users')
+        max_user_id = cursor.fetchone()[0]
+        new_user_id = (max_user_id + 1) if max_user_id else 1
+
         try:
-            cursor.execute('INSERT INTO user_cred (name, email, password) VALUES (?, ?, ?)',
-                           (name, email, password))
+            cursor.execute('INSERT INTO user_cred (user_id, name, email, password) VALUES (?, ?, ?, ?)',
+                           (new_user_id, name, email, password))
             conn.commit()
+            db.insert_new_user(User(
+                user_id=new_user_id,
+                name=name
+            ))
             flash('Registration successful!')
             return redirect(url_for('login'))
+
         except sqlite3.IntegrityError:
             flash('Email already registered.')
 
         conn.close()
 
-    return render_template('signup.html')
+    return render_template('signup.html', fetch_logged_in_user_id=fetch_logged_in_user_id)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -89,14 +100,15 @@ def login():
 
         if user:
             session['user_id'] = user['user_id']
-            flash('Login successful!')
-            return redirect(url_for('dashboard'))
+            flash('Login successful!', 'info')
+            return jsonify({"success": True})
+
         else:
-            flash('Invalid email or password.')
+            flash('Invalid email or password.', 'error')
 
         conn.close()
 
-    return render_template('index.html')
+        return render_template('index.html')
 
 
 @app.route('/logout')
@@ -107,7 +119,7 @@ def logout():
 
 
 def fetch_logged_in_user_id():
-    return session.get('user_id')
+    return session.get('user_id', 1)
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
@@ -170,6 +182,7 @@ def edit_profile(user_id=1):
             if file and allowed_file(file.filename):
                 # Secure the filename and save it
                 filename = secure_filename(file.filename)
+                filename = user.name.split(' ')[0]
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
                 print("FILE:", file_path, filename)

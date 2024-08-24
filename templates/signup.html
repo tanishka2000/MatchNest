@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>SIGN UP</title>
     <link href="/static/test.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="/static/test.js"></script>
 
@@ -18,17 +19,18 @@
 
 <div class="c-formContainer">
   <div class="c-welcome">
-      <button class="btn"> <a href="/profile/edit/2" style="text-decoration: none;">Let's get started! </a></button>
+      <button class="btn" id="button-action"> Build your Nest! </button>
   </div>
-  <form class="c-form" action="/signup" method="POST">
+  <form id="signup-form" class="c-form" action="/signup" method="POST">
     <div class="c-form__group">
       <label class="c-form__label" for="username">
                     <input
                         type="text"
+                        name="name"
                         id="username"
                         class="c-form__input"
                         placeholder=" "
-                        pattern="[^\s]+"
+                        pattern="[^\s]*"
                         required>
 
                     <label class="c-form__next" for="progress2" role="button">
@@ -44,10 +46,10 @@
       <label class="c-form__label" for="femail">
                     <input
                         type="email"
+                        name="email"
                         id="femail"
                         class="c-form__input"
                         placeholder=" "
-                        pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
                         required>
 
                     <label class="c-form__next" for="progress3" role="button">
@@ -63,6 +65,7 @@
       <label class="c-form__label" for="fpass">
                     <input
                         type="password"
+                        name="password"
                         id="fpass"
                         class="c-form__input"
                         placeholder=" "
@@ -80,6 +83,38 @@
     <label class="c-form__toggle" for="start">Register<span class="c-form__toggleIcon"></span></label>
   </form>
 </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // Handle form submission
+      $('#signup-form').on('submit', function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        var formData = $(this).serialize(); // Serialize form data
+
+        $.ajax({
+          url: '/signup', // Flask will dynamically generate the correct URL
+          type: 'POST',
+          data: formData,
+          success: function (response) {
+            if (response.success) {
+              window.location.href = '/profile/' + response.user_id; // Redirect to profile page
+            } else {
+              alert('Error signing up: ' + (response.error || 'Please try again.'));
+            }
+          },
+          error: function () {
+            alert('An unexpected error occurred. Please try again.');
+          }
+        });
+      });
+
+      $('#button-action').on('click', function () {
+        $('#signup-form').submit(); // Trigger form submission when button is clicked
+      });
+    });
+  </script>
+
 </body>
 
 </html>

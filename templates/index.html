@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>SIGN UP</title>
     <link href="/static/main.css" rel="stylesheet">
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/main.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -64,7 +64,7 @@
           if (response.success) {
             window.location.href = '/dashboard'; // Redirect to profile page
           } else {
-            alert('Error updating profile: ' + (response.error || 'Please try again.'));
+            alert('Error loading profile: ' + (response.error || 'Please try again.'));
           }
         },
         error: function () {
