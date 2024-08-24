@@ -19,7 +19,10 @@
 
 <div class="c-formContainer">
   <div class="c-welcome">
-      <button class="btn" id="button-action"> Build your Nest! </button>
+      <button class="btn" id="button-action">
+          <a href="/profile/edit/{{fetch_logged_in_user_id()}}" style="text-decoration: none">Build your Nest! </a>
+
+      </button>
   </div>
   <form id="signup-form" class="c-form" action="/signup" method="POST">
     <div class="c-form__group">
