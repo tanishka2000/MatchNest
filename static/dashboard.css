@@ -4,7 +4,7 @@
   margin: 0;
 }
 
-body {
+body .tinder {
   background: #b3a8d6ff;
   overflow: hidden;
   font-family: sans-serif;
@@ -136,8 +136,6 @@ body {
   font-weight: 300;
   font-size: 13px;
   text-align: center;
-  padding-top: 0.5em;
-  padding-bottom: 0.7em;
 }
 
 .description {
@@ -148,10 +146,11 @@ body {
   margin: 1em 1em;
 }
 
-.btn {
+.btn_know_more {
   color: #fff;
   width: 100px;
-  height: 30px;
+  font-size: 13px;
+  height: 25px;
   outline: none;
   border: none;
   display: block;
@@ -164,38 +163,40 @@ body {
   background: linear-gradient(45deg, rgba(87, 29, 146, 1) 0%, rgba(172, 25, 102, 1) 100%);
 }
 
-ul {
+.unordered {
             list-style-type: none;
             margin: 0;
             padding: 0;
         }
 
- ul li {
+ .unordered .listitem {
    color: black;
 
             border-radius: 5px;
    background: #b3a8d6ff;
             display: inline-block;
-            font-size: 16px;
+            font-size: 13px;
    font-weight: bold;
             margin: 0 7px 7px 0;
-            padding: 7px 15px;
+            padding: 5px 12px;
 
   text-transform: capitalize;
         }
 
- .btn-link {
+ .btn_link {
     text-decoration: none;
     color: white; /* Default color */
 }
 
-.btn-link:hover,
-.btn-link:focus,
-.btn-link:active {
+.btn_link:hover,
+.btn_link:focus,
+.btn_link:active {
     color: white; /* Color on hover, focus, and active */
+  text-decoration: none;
 }
 
-.btn-link:visited {
+.btn_link:visited {
     color: white; /* Color for visited links */
+  text-decoration: none;;
 }
 

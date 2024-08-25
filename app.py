@@ -14,7 +14,7 @@ from flaskr.UserDatabase import UserDatabase
 from flaskr.active_user import active_user, end_user_session, fetch_active_user, is_user_authenticated
 from flaskr.matching_algorithm import compute_compatibility_scores
 from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
-from flaskr.storage import init_user_cred
+from flaskr.storage import init_user_cred, init_user_activities
 
 app = Flask(__name__, template_folder='templates')
 app.secret_key = secrets.token_hex(16)
@@ -32,6 +32,7 @@ def allowed_file(filename):
 active_user_id = 1
 user_cred_db_file = './storage/user_cred.db'
 db_file = './utils/users.db'
+user_act_db_file = './storage/user_act.db'
 db = UserDatabase()
 current_user = UserActivitiesModel(user_id=active_user_id)
 
@@ -329,4 +330,5 @@ def calculate_zodiac():
 if __name__ == '__main__':
     db = UserDatabase()
     init_user_cred(user_cred_db_file)
+    init_user_activities(user_act_db_file)
     app.run(host="0.0.0.0", port=8000, debug=True)

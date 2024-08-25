@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+    <button class="navbar-toggler" type="button" style="display: grid" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+            <img src="/static/navbar.png" style="width: 1.5em">
+        </span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
@@ -15,7 +17,8 @@
             </li>
         </ul>
         <div class="dropdown ml-auto">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle"
+                    style="background: transparent; border: none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{user_profile_pic_url}}" alt="Profile Picture" class="user-pic">
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -34,6 +37,7 @@
     position: relative;
     padding: 0.5rem 1rem;
     width: 100%;
+    background: #1F1A36;
 }
 
 .nav-link {
@@ -54,6 +58,9 @@
     z-index: 1000;    /* Ensure dropdown is on top */
 }
 
+.btn .btn-secondary .dropdown-toggle:focus{
+    box-shadow:none
+}
 </style>
 
 <!-- Bootstrap and jQuery Scripts -->

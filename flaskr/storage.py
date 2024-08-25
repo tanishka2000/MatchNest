@@ -28,3 +28,20 @@ def init_user_cred(user_cred_db_file):
 
     conn.commit()
     conn.close()
+
+def init_user_activities(user_act_db_file):
+    conn = sqlite3.connect(user_act_db_file)
+    cursor = conn.cursor()
+
+    # Create table for users
+    cursor.execute('''
+                CREATE TABLE IF NOT EXISTS user_activities (
+                    user_id INTEGER PRIMARY KEY,
+                    liked_users TEXT,
+                    disliked_users TEXT,
+                    matches TEXT
+                )
+            ''')
+
+    conn.commit()
+    conn.close()
