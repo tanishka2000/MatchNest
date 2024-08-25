@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg">
-    <button class="navbar-toggler" type="button" style="display: grid" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" style="display: grid" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
             <img src="/static/navbar.png" style="width: 1.5em">
         </span>
@@ -18,7 +19,8 @@
         </ul>
         <div class="dropdown ml-auto">
             <button class="btn btn-secondary dropdown-toggle"
-                    style="background: transparent; border: none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    style="background: transparent; border: none" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="{{user_profile_pic_url}}" alt="Profile Picture" class="user-pic">
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -32,35 +34,35 @@
 
 <!-- CSS for Navbar -->
 <style>
-/* Navbar CSS */
-.navbar {
-    position: relative;
-    padding: 0.5rem 1rem;
-    width: 100%;
-    background: #1F1A36;
-}
+    /* Navbar CSS */
+    .navbar {
+        position: relative;
+        padding: 0.5rem 1rem;
+        width: 100%;
+        background: #1F1A36;
+    }
 
-.nav-link {
-    color: white;
-}
+    .nav-link {
+        color: white;
+    }
 
-.user-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-}
+    .user-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        cursor: pointer;
+    }
 
-/* Dropdown CSS */
-.dropdown-menu {
-    min-width: 160px; /* Adjust width if needed */
-    z-index: 1000;    /* Ensure dropdown is on top */
-}
+    /* Dropdown CSS */
+    .dropdown-menu {
+        min-width: 160px; /* Adjust width if needed */
+        z-index: 1000; /* Ensure dropdown is on top */
+    }
 
-.btn .btn-secondary .dropdown-toggle:focus{
-    box-shadow:none
-}
+    .btn .btn-secondary .dropdown-toggle:focus {
+        box-shadow: none
+    }
 </style>
 
 <!-- Bootstrap and jQuery Scripts -->

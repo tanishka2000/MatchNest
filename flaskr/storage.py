@@ -4,8 +4,8 @@
 2. UserCred
 3. UserActivity
 """
-import os
 import sqlite3
+
 
 def init_user_cred(user_cred_db_file):
     # Sets up the user database by creating the necessary table.
@@ -15,7 +15,7 @@ def init_user_cred(user_cred_db_file):
 
     conn = sqlite3.connect(user_cred_db_file)
     cursor = conn.cursor()
-    
+
     # Create table for users
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS user_cred (
@@ -28,6 +28,7 @@ def init_user_cred(user_cred_db_file):
 
     conn.commit()
     conn.close()
+
 
 def init_user_activities(user_act_db_file):
     conn = sqlite3.connect(user_act_db_file)

@@ -8,7 +8,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -153,18 +154,19 @@
     <form id="profileForm" method="POST" enctype="multipart/form-data">
         <!-- Profile Picture Section -->
         <div class="form-group">
-    <label for="profile_pic">Profile Picture</label>
-    <div class="profile-pic-container">
-        {% if user.profile_pic %}
-            <img id="profile-pic" src="/static/profile_pics/{{user.profile_pic}}" class="profile-pic" alt="Profile Picture">
-            <button type="button" id="remove-pic" class="remove-pic">&times;</button>
-        {% else %}
-            <img id="profile-pic" src="https://via.placeholder.com/150" class="profile-pic" alt="Profile Picture">
-        {% endif %}
-    </div>
-    <input type="file" class="form-control-file mt-2" id="profile-pic-input" name="profile_pic"
-           {% if not user.profile_pic %}required{% endif %}>
-</div>
+            <label for="profile_pic">Profile Picture</label>
+            <div class="profile-pic-container">
+                {% if user.profile_pic %}
+                <img id="profile-pic" src="/static/profile_pics/{{user.profile_pic}}" class="profile-pic"
+                     alt="Profile Picture">
+                <button type="button" id="remove-pic" class="remove-pic">&times;</button>
+                {% else %}
+                <img id="profile-pic" src="https://via.placeholder.com/150" class="profile-pic" alt="Profile Picture">
+                {% endif %}
+            </div>
+            <input type="file" class="form-control-file mt-2" id="profile-pic-input" name="profile_pic"
+                   {% if not user.profile_pic %}required{% endif %}>
+        </div>
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" required>
@@ -180,7 +182,8 @@
         <!-- Zodiac Sign Dropdown (disabled)-->
         <div class="form-group">
             <label for="zodiac_sign">Zodiac Sign</label>
-            <input type="text" class="form-control" id="zodiac_sign" name="zodiac_sign" value="{{ user.zodiac_sign.value if user.zodiac_sign else '' }}"
+            <input type="text" class="form-control" id="zodiac_sign" name="zodiac_sign"
+                   value="{{ user.zodiac_sign.value if user.zodiac_sign else '' }}"
                    readonly>
         </div>
         <div class="form-group">
@@ -271,11 +274,11 @@
             if (dob) {
                 $.ajax({
                     url: '/get_zodiac_sign',  // Flask route to get Zodiac Sign
-            type: 'POST',
-            contentType: 'application/json',  // Set the correct Content-Type header
-            dataType: 'json',  // Expect JSON response from the server
-            data: JSON.stringify({dob: dob}),  // Convert the data to a JSON string
-            success: function (response) {
+                    type: 'POST',
+                    contentType: 'application/json',  // Set the correct Content-Type header
+                    dataType: 'json',  // Expect JSON response from the server
+                    data: JSON.stringify({dob: dob}),  // Convert the data to a JSON string
+                    success: function (response) {
                         if (response.success) {
                             var zodiacSign = response.zodiac_sign;
                             $('#zodiac_sign').val(zodiacSign);

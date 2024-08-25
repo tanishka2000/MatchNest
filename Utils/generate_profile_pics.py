@@ -1,4 +1,5 @@
 import os
+
 import requests
 
 # Constants for gender
@@ -27,7 +28,7 @@ def download_and_save_avatar(url, firstname, folder_path):
     response = requests.get(url)
     if response.status_code == 200:
         image_path = os.path.join(folder_path, f"{firstname}.png")
-        image_path= image_path.replace('\\', '/')
+        image_path = image_path.replace('\\', '/')
         print(image_path)
         with open(image_path, 'wb') as img_file:
             img_file.write(response.content)
@@ -45,4 +46,3 @@ def save_avatars(firstname, gender, folder_path='../static/profile_pics'):
     url = get_avatar_url(gender, firstname)
     download_and_save_avatar(url, firstname, folder_path)
     return firstname
-

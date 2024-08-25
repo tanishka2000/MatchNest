@@ -1,189 +1,189 @@
 *, *:before, *:after {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
 body .tinder {
-  background: #b3a8d6ff;
-  overflow: hidden;
-  font-family: sans-serif;
+    background: #b3a8d6ff;
+    overflow: hidden;
+    font-family: sans-serif;
 }
 
 .tinder {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  opacity: 0;
-  transition: opacity 0.1s ease-in-out;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
 }
 
 .loaded.tinder {
-  opacity: 1;
+    opacity: 1;
 }
 
 .tinder--status {
-  position: absolute;
-  top: 50%;
-  margin-top: -30px;
-  z-index: 2;
-  width: 100%;
-  text-align: center;
-  pointer-events: none;
+    position: absolute;
+    top: 50%;
+    margin-top: -30px;
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
 }
 
 .tinder--status i {
-  font-size: 100px;
-  opacity: 0;
-  transform: scale(0.3);
-  transition: all 0.2s ease-in-out;
-  position: absolute;
-  width: 100px;
-  margin-left: -50px;
+    font-size: 100px;
+    opacity: 0;
+    transform: scale(0.3);
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    width: 100px;
+    margin-left: -50px;
 }
 
 .tinder_love .fa-heart {
-  opacity: 0.7;
-  transform: scale(1);
+    opacity: 0.7;
+    transform: scale(1);
 }
 
 .tinder_nope .fa-remove {
-  opacity: 0.7;
-  transform: scale(1);
+    opacity: 0.7;
+    transform: scale(1);
 }
 
 .tinder--cards {
-  flex-grow: 1;
-  padding-top: 40px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  z-index: 1;
+    flex-grow: 1;
+    padding-top: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 1;
 }
 
 .tinder--card {
-  display: inline-block;
-  width: 90vw;
-  max-width: 400px;
-  height: 70vh;
-  background: #FFFFFF;
-  padding-bottom: 40px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: absolute;
-  will-change: transform;
-  transition: all 0.3s ease-in-out;
-  cursor: -webkit-grab;
-  cursor: -moz-grab;
-  cursor: grab;
+    display: inline-block;
+    width: 90vw;
+    max-width: 400px;
+    height: 70vh;
+    background: #FFFFFF;
+    padding-bottom: 40px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: absolute;
+    will-change: transform;
+    transition: all 0.3s ease-in-out;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
 }
 
 .moving.tinder--card {
-  transition: none;
-  cursor: -webkit-grabbing;
-  cursor: -moz-grabbing;
-  cursor: grabbing;
+    transition: none;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
 }
 
 .tinder--buttons {
-  flex: 0 0 100px;
-  text-align: center;
-  padding-top: 20px;
+    flex: 0 0 100px;
+    text-align: center;
+    padding-top: 20px;
 }
 
 .tinder--buttons button {
-  border-radius: 50%;
-  line-height: 60px;
-  width: 60px;
-  border: 0;
-  background: #FFFFFF;
-  display: inline-block;
-  margin: 0 8px;
+    border-radius: 50%;
+    line-height: 60px;
+    width: 60px;
+    border: 0;
+    background: #FFFFFF;
+    display: inline-block;
+    margin: 0 8px;
 }
 
 .tinder--buttons button:focus {
-  outline: 0;
+    outline: 0;
 }
 
 .fa-heart {
-  color: #FFACE4;
+    color: #FFACE4;
 }
 
 .fa-remove {
-  color: #CDD6DD;
+    color: #CDD6DD;
 }
 
 .thumbnail {
-  display: flex;
-  margin: 1.5em auto;
-  border-radius: 100%;
-  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    margin: 1.5em auto;
+    border-radius: 100%;
+    box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .name {
-  color: #2D354A;
-  font-size: 24px;
-  font-weight: 600;
-  text-align: center;
+    color: #2D354A;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
 }
 
 .title {
-  color: #7C8097;
-  font-weight: 300;
-  font-size: 13px;
-  text-align: center;
+    color: #7C8097;
+    font-weight: 300;
+    font-size: 13px;
+    text-align: center;
 }
 
 .description {
-  color: #080911;
-  font-size: 1em;
-  font-weight: 300;
-  text-align: center;
-  margin: 1em 1em;
+    color: #080911;
+    font-size: 1em;
+    font-weight: 300;
+    text-align: center;
+    margin: 1em 1em;
 }
 
 .btn_know_more {
-  color: #fff;
-  width: 100px;
-  font-size: 13px;
-  height: 25px;
-  outline: none;
-  border: none;
-  display: block;
-  cursor: pointer;
-  font-weight: 300;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 70px;
-  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.16);
-  background: linear-gradient(45deg, rgba(87, 29, 146, 1) 0%, rgba(172, 25, 102, 1) 100%);
+    color: #fff;
+    width: 100px;
+    font-size: 13px;
+    height: 25px;
+    outline: none;
+    border: none;
+    display: block;
+    cursor: pointer;
+    font-weight: 300;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 70px;
+    box-shadow: 0 13px 26px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.16);
+    background: linear-gradient(45deg, rgba(87, 29, 146, 1) 0%, rgba(172, 25, 102, 1) 100%);
 }
 
 .unordered {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
 
- .unordered .listitem {
-   color: black;
+.unordered .listitem {
+    color: black;
 
-            border-radius: 5px;
-   background: #b3a8d6ff;
-            display: inline-block;
-            font-size: 13px;
-   font-weight: bold;
-            margin: 0 7px 7px 0;
-            padding: 5px 12px;
+    border-radius: 5px;
+    background: #b3a8d6ff;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0 7px 7px 0;
+    padding: 5px 12px;
 
-  text-transform: capitalize;
-        }
+    text-transform: capitalize;
+}
 
- .btn_link {
+.btn_link {
     text-decoration: none;
     color: white; /* Default color */
 }
@@ -192,11 +192,11 @@ body .tinder {
 .btn_link:focus,
 .btn_link:active {
     color: white; /* Color on hover, focus, and active */
-  text-decoration: none;
+    text-decoration: none;
 }
 
 .btn_link:visited {
     color: white; /* Color for visited links */
-  text-decoration: none;;
+    text-decoration: none;;
 }
 

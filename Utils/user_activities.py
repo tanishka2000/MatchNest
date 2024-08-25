@@ -29,7 +29,3 @@ user_activities.add_liked_user(active_user, 22)
 #
 print(user_activities.fetch_user_activity(active_user).matches)
 # print(user_activities2.fetch_user_activity(3).matches)
-
-
-
-

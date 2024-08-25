@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 user_modifiable_fields = ['bio', 'gender', 'profession', 'smoking', 'drinking', 'interests', 'mbti', 'profile_pic']
 
+
 def random_birth_date(start_year=1970, end_year=2006):
     # Randomly select a year between start_year and end_year
     year = random.randint(start_year, end_year)
@@ -15,6 +16,7 @@ def random_birth_date(start_year=1970, end_year=2006):
     # Return the date in "YYYY-MM-DD" format
     return random_date.strftime('%Y-%m-%d')
 
+
 def calculate_age(dob):
     """Calculates age based on date of birth."""
     if not dob:
@@ -25,6 +27,7 @@ def calculate_age(dob):
     if (today.month, today.day) < (dob.month, dob.day):
         age -= 1
     return age
+
 
 def get_zodiac_sign(dob):
     """Determines the zodiac sign based on date of birth."""

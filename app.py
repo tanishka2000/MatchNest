@@ -14,7 +14,7 @@ from flaskr.UserActivities import UserActivities
 from flaskr.UserDatabase import UserDatabase
 from flaskr.active_user import active_user, end_user_session, fetch_active_user, is_user_authenticated
 from flaskr.matching_algorithm import compute_compatibility_scores
-from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
+from flaskr.models import Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
 from flaskr.storage import init_user_cred, init_user_activities
 
 app = Flask(__name__, template_folder='templates')
@@ -102,7 +102,6 @@ def login():
 
         if user:
             active_user(user[0])
-            print('Login successful!', 'info')
             return jsonify({"success": True})
         else:
             jsonify({"success": False, "error": "Invalid Credentials"})
@@ -164,6 +163,7 @@ def inject_user_id_image():
         user_profile_pic_url = f"/static/profile_pics/{logged_in_user.profile_pic}" if logged_in_user.profile_pic else "https://via.placeholder.com/40"
         return dict(fetch_logged_in_user_id=fetch_logged_in_user_id, user_profile_pic_url=user_profile_pic_url)
     return dict(fetch_logged_in_user_id=fetch_logged_in_user_id)
+
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -329,6 +329,7 @@ def calculate_zodiac():
         zodiac_sign = get_zodiac_sign(dob)
         return jsonify({"success": True, 'zodiac_sign': zodiac_sign})
     return jsonify({'error': 'Invalid date of birth'}), 400
+
 
 if __name__ == '__main__':
     db = UserDatabase()

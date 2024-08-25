@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def init_db():
     conn = sqlite3.connect('./Utils/users.db')
     cursor = conn.cursor()

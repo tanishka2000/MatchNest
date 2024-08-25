@@ -1,14 +1,14 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>SIGN UP</title>
+    <meta charset="utf-8">
+    <title>SIGN UP</title>
     <link href="/static/test.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="/static/test.js"></script>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <input class="c-checkbox" type="checkbox" id="start">
@@ -18,15 +18,15 @@
 <div class="c-form__progress"></div>
 
 <div class="c-formContainer">
-  <div class="c-welcome">
-      <button class="btn" id="button-action">
-          Build your Nest!
-      </button>
-  </div>
-  <form id="signup-form" class="c-form" action="/signup" method="POST">
-    <div class="c-form__group">
-      <label class="c-form__label" for="username">
-                    <input
+    <div class="c-welcome">
+        <button class="btn" id="button-action">
+            Build your Nest!
+        </button>
+    </div>
+    <form id="signup-form" class="c-form" action="/signup" method="POST">
+        <div class="c-form__group">
+            <label class="c-form__label" for="username">
+                <input
                         type="text"
                         name="name"
                         id="username"
@@ -35,18 +35,18 @@
                         pattern="[^\s]*"
                         required>
 
-                    <label class="c-form__next" for="progress2" role="button">
-                        <span class="c-form__nextIcon"></span>
-                    </label>
+                <label class="c-form__next" for="progress2" role="button">
+                    <span class="c-form__nextIcon"></span>
+                </label>
 
-      <span class="c-form__groupLabel">Enter your Name</span>
-      <b class="c-form__border"></b>
-      </label>
-    </div>
+                <span class="c-form__groupLabel">Enter your Name</span>
+                <b class="c-form__border"></b>
+            </label>
+        </div>
 
-    <div class="c-form__group">
-      <label class="c-form__label" for="femail">
-                    <input
+        <div class="c-form__group">
+            <label class="c-form__label" for="femail">
+                <input
                         type="email"
                         name="email"
                         id="femail"
@@ -54,18 +54,18 @@
                         placeholder=" "
                         required>
 
-                    <label class="c-form__next" for="progress3" role="button">
-                        <span class="c-form__nextIcon"></span>
-                    </label>
+                <label class="c-form__next" for="progress3" role="button">
+                    <span class="c-form__nextIcon"></span>
+                </label>
 
-      <span class="c-form__groupLabel">What's your email?</span>
-      <b class="c-form__border"></b>
-      </label>
-    </div>
+                <span class="c-form__groupLabel">What's your email?</span>
+                <b class="c-form__border"></b>
+            </label>
+        </div>
 
-    <div class="c-form__group">
-      <label class="c-form__label" for="fpass">
-                    <input
+        <div class="c-form__group">
+            <label class="c-form__label" for="fpass">
+                <input
                         type="password"
                         name="password"
                         id="fpass"
@@ -73,50 +73,50 @@
                         placeholder=" "
                         required>
 
-                    <label class="c-form__next" for="finish" role="button">
-                        <span class="c-form__nextIcon"></span>
-                    </label>
+                <label class="c-form__next" for="finish" role="button">
+                    <span class="c-form__nextIcon"></span>
+                </label>
 
-      <span class="c-form__groupLabel">Create your password.</span>
-      <b class="c-form__border"></b>
-      </label>
-    </div>
+                <span class="c-form__groupLabel">Create your password.</span>
+                <b class="c-form__border"></b>
+            </label>
+        </div>
 
-    <label class="c-form__toggle" for="start">Register<span class="c-form__toggleIcon"></span></label>
-  </form>
+        <label class="c-form__toggle" for="start">Register<span class="c-form__toggleIcon"></span></label>
+    </form>
 </div>
 
-  <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function () {
-      // Handle form submission
-      $('#signup-form').on('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        // Handle form submission
+        $('#signup-form').on('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
 
-        var formData = $(this).serialize(); // Serialize form data
+            var formData = $(this).serialize(); // Serialize form data
 
-        $.ajax({
-          url: '/signup', // Flask will dynamically generate the correct URL
-          type: 'POST',
-          data: formData,
-          dataType: 'json', // Expect a JSON response
-          success: function (response) {
-            if (response.success) {
-              window.location.href = '/profile/edit/' + response.user_id; // Redirect to profile page
-            } else {
-              alert('Error signing up: ' + (response || 'Please try again.'));
-            }
-          },
-          error: function () {
-            alert('An unexpected error occurred. Please try again.');
-          }
+            $.ajax({
+                url: '/signup', // Flask will dynamically generate the correct URL
+                type: 'POST',
+                data: formData,
+                dataType: 'json', // Expect a JSON response
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/profile/edit/' + response.user_id; // Redirect to profile page
+                    } else {
+                        alert('Error signing up: ' + (response || 'Please try again.'));
+                    }
+                },
+                error: function () {
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            });
         });
-      });
 
-      $('#button-action').on('click', function () {
-        $('#signup-form').submit(); // Trigger form submission when button is clicked
-      });
+        $('#button-action').on('click', function () {
+            $('#signup-form').submit(); // Trigger form submission when button is clicked
+        });
     });
-  </script>
+</script>
 
 </body>
 

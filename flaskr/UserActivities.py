@@ -34,7 +34,8 @@ class UserActivities:
 
         # fetch current user's activities
         current_user_activities = self.fetch_user_activity(current_user_id)
-        current_user_liked_list = list(map(int, current_user_activities.liked_users.split(','))) if current_user_activities.liked_users else []
+        current_user_liked_list = list(
+            map(int, current_user_activities.liked_users.split(','))) if current_user_activities.liked_users else []
 
         # if user_to_like is not in current user's like list, then add them to liked list
         if user_to_like_user_id not in current_user_liked_list:
@@ -44,12 +45,15 @@ class UserActivities:
 
             # fetch user_to_like activities
             user_to_like_activities = self.fetch_user_activity(user_to_like_user_id)
-            user_to_like_liked_list = list(map(int, user_to_like_activities.liked_users.split(','))) if user_to_like_activities.liked_users else []
+            user_to_like_liked_list = list(
+                map(int, user_to_like_activities.liked_users.split(','))) if user_to_like_activities.liked_users else []
 
             # now check it's like list
             if current_user_id in user_to_like_liked_list:
-                user_to_like_matches_list = list(map(int, user_to_like_activities.matches.split(','))) if user_to_like_activities.matches else []
-                current_user_matches_list = list(map(int, current_user_activities.matches.split(','))) if current_user_activities.matches else []
+                user_to_like_matches_list = list(
+                    map(int, user_to_like_activities.matches.split(','))) if user_to_like_activities.matches else []
+                current_user_matches_list = list(
+                    map(int, current_user_activities.matches.split(','))) if current_user_activities.matches else []
                 user_to_like_matches_list.append(current_user_id)
                 current_user_matches_list.append(user_to_like_user_id)
 
@@ -84,7 +88,8 @@ class UserActivities:
 
         # fetch current user's activities
         current_user_activities = self.fetch_user_activity(current_user_id)
-        current_user_disliked_list = list(map(int, current_user_activities.disliked_users.split(','))) if current_user_activities.disliked_users else []
+        current_user_disliked_list = list(map(int, current_user_activities.disliked_users.split(
+            ','))) if current_user_activities.disliked_users else []
 
         # if user_to_dislike is not in current user's dislike list, then add them to disliked list
         if user_to_dislike_user_id not in current_user_disliked_list:

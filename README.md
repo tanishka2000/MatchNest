@@ -1,6 +1,8 @@
 # MatchNest - A Flask-Based Dating App
 
-**MatchNest** is a dating application built using Flask, SQLite3, CSS, JavaScript, and HTML. The app allows users to create profiles, upload images, and swipe through potential matches similar to popular dating apps like Tinder. The application focuses on delivering personalized user recommendations based on user preferences and compatibility scores.
+**MatchNest** is a dating application built using Flask, SQLite3, CSS, JavaScript, and HTML. The app allows users to
+create profiles, upload images, and swipe through potential matches similar to popular dating apps like Tinder. The
+application focuses on delivering personalized user recommendations based on user preferences and compatibility scores.
 
 ## Table of Contents
 
@@ -41,7 +43,6 @@
 
 2. **Install Python Dependencies:**
 
-
     ```bash
     pip install -r requirements.txt
 
@@ -51,6 +52,7 @@
    flask run
 
 ### Usage
+
 Sign Up: Create a new account using the signup form.
 Login: Use your credentials to log in.
 Update Profile: Add a bio, upload a profile picture, and set preferences.
@@ -58,6 +60,7 @@ Swipe: Browse through recommended profiles and swipe left or right.
 Matches: View your matches and start interacting.
 
 ### Database Schema
+
 The application uses SQLite3 for data persistence. The following tables are defined:
 
 **users:** Stores user details like user_id, name, bio, location, etc.
@@ -65,6 +68,7 @@ The application uses SQLite3 for data persistence. The following tables are defi
 **user_activities:** Tracks liked, disliked, and matched users.
 
 ### Compatibility Scoring
+
 The app calculates compatibility scores based on:
 
 **Bio-Bio Matching**: Compare user bios to find common keywords.

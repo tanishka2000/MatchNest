@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 
+from Utils.constants import MBTI_PAIRS, ZODIAC_COMPATIBILITY
 from flaskr.UserActivities import UserActivities
 from flaskr.UserDatabase import UserDatabase
-from Utils.constants import MBTI_PAIRS, ZODIAC_COMPATIBILITY
 from flaskr.models import User
 
 db = UserDatabase()

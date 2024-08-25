@@ -6,7 +6,8 @@
     <title>User Portfolio</title>
     <!-- Include Bootstrap CSS --><!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Include custom CSS -->
     <link rel="stylesheet" href="/static/main.css">
@@ -107,30 +108,30 @@
             padding: 7px;
         }
 
-.data-user {
-    margin-bottom: 0;
-    padding: 0;
-    list-style: none;
-}
+        .data-user {
+            margin-bottom: 0;
+            padding: 0;
+            list-style: none;
+        }
 
-.data-user li {
-    display: flex;
-    align-items: center;
-color: white;
-}
+        .data-user li {
+            display: flex;
+            align-items: center;
+            color: white;
+        }
 
-.data-user li:before {
-    content: '\25CF'; /* Unicode for a filled circle */
-    color: #fff; /* White bullet */
-    margin-right: 0.5em;
-    font-size: 1.2em;
-}
+        .data-user li:before {
+            content: '\25CF'; /* Unicode for a filled circle */
+            color: #fff; /* White bullet */
+            margin-right: 0.5em;
+            font-size: 1.2em;
+        }
 
-.data-user .key{
-margin-right: 0.5em;
+        .data-user .key {
+            margin-right: 0.5em;
 
-    font-weight: 600;
-}
+            font-weight: 600;
+        }
 
     </style>
 </head>
@@ -138,8 +139,8 @@ margin-right: 0.5em;
 {% include 'base.html' %}
 <div class="card-container">
     <!--src="https://randomuser.me/api/portraits/women/79.jpg"-->
-	<img class="round" src="/static/profile_pics/{{user.profile_pic}}" alt="user" />
-	<h3>{{ user.name }}<p style="font-size: x-small">Gender: {{ user.gender.value }}</p></h3>
+    <img class="round" src="/static/profile_pics/{{user.profile_pic}}" alt="user"/>
+    <h3>{{ user.name }}<p style="font-size: x-small">Gender: {{ user.gender.value }}</p></h3>
     <h6>{{ user.profession }}, <span style="font-style: italic; font-weight: lighter">{{ user.location }}</span></h6>
     <p style="
     margin-left: 5%;
@@ -150,23 +151,23 @@ margin-right: 0.5em;
         {{ user.bio }}
     </p>
     <ul class="data-user">
-    <li><span class="key">Age:</span > {{ user.age }}</li>
-    <li><span class="key">Zodiac:</span > {{ user.zodiac_sign.value }}</li>
-    <li><span class="key">MBTI:</span > {{ user.mbti.value }}</li>
-    <li><span class="key">Height:</span > {{ user.height }}</li>
-    <li><span class="key">Smoking:</span > {{ user.smoking.value }}</li>
-    <li><span class="key">Drinking:</span > {{ user.drinking.value }}</li>
-</ul>
+        <li><span class="key">Age:</span> {{ user.age }}</li>
+        <li><span class="key">Zodiac:</span> {{ user.zodiac_sign.value }}</li>
+        <li><span class="key">MBTI:</span> {{ user.mbti.value }}</li>
+        <li><span class="key">Height:</span> {{ user.height }}</li>
+        <li><span class="key">Smoking:</span> {{ user.smoking.value }}</li>
+        <li><span class="key">Drinking:</span> {{ user.drinking.value }}</li>
+    </ul>
 
 
-	<div class="skills">
-		<h6>Hobbies</h6>
-		<ul>
+    <div class="skills">
+        <h6>Hobbies</h6>
+        <ul>
             {% for interest in user.interests %}
             <li>{{ interest }}</li>
             {% endfor %}
         </ul>
-	</div>
+    </div>
     {% if user.user_id == fetch_logged_in_user_id() | int %}
     <div class="buttons" style="margin: 5%">
         <a href="/profile/edit/{{ user.user_id }}" class="btn btn-primary">Modify my Profile</a>

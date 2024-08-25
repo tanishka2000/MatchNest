@@ -1,8 +1,10 @@
-from pydantic import BaseModel, ValidationError, Field, validator
-from typing import List, Optional
 from enum import Enum
+from typing import List, Optional
 
-#Define the class gender with necessary attributes
+from pydantic import BaseModel, ValidationError, Field
+
+
+# Define the class gender with necessary attributes
 class Gender(str, Enum):
     MALE = "Male"
     FEMALE = "Female"
@@ -10,7 +12,8 @@ class Gender(str, Enum):
     OTHER = "Other"
     PREFER_NOT_TO_SAY = "Prefer not to say"
 
-#Define the class Options with necessary attributes
+
+# Define the class Options with necessary attributes
 class Options(str, Enum):
     NEVER = "Never"
     OCCASIONALLY = "Occasionally"
@@ -18,7 +21,8 @@ class Options(str, Enum):
     FREQUENTLY = "Frequently"
     ALWAYS = "Always"
 
-#Define the class ZodiacSign with necessary attributes
+
+# Define the class ZodiacSign with necessary attributes
 class ZodiacSign(str, Enum):
     ARIES = "Aries"
     TAURUS = "Taurus"
@@ -33,7 +37,8 @@ class ZodiacSign(str, Enum):
     AQUARIUS = "Aquarius"
     PISCES = "Pisces"
 
-#Define the class MBTITypes with necessary attributes
+
+# Define the class MBTITypes with necessary attributes
 class MBTITypes(str, Enum):
     INTJ = "INTJ"
     INTP = "INTP"
@@ -52,17 +57,19 @@ class MBTITypes(str, Enum):
     ESTP = "ESTP"
     ESFP = "ESFP"
 
-#Define the class UserPreferenceFields with necessary attributes
+
+# Define the class UserPreferenceFields with necessary attributes
 class UserPreferenceFields(BaseModel):
     age: List[int]
     gender: List[Gender]
 
-#Define the class UserDetails with necessary attributes
+
+# Define the class UserDetails with necessary attributes
 
 class UserActivitiesModel(BaseModel):
     user_id: int
     liked_users: Optional[str] = ""
-    disliked_users: Optional[ str] = ""
+    disliked_users: Optional[str] = ""
     matches: Optional[str] = ""
 
 
@@ -77,7 +84,8 @@ class UserDetails(BaseModel):
 
 
 class UserIdentifiers(UserDetails):
-    user_id: Optional[int] = Field(default=None, description="Unique ID for the user. Auto-incremented in the database.")
+    user_id: Optional[int] = Field(default=None,
+                                   description="Unique ID for the user. Auto-incremented in the database.")
     name: str
     bio: str
     birth_date: str
@@ -85,7 +93,8 @@ class UserIdentifiers(UserDetails):
     profession: str
     profile_pic: str = ""
 
-#Define the class User(BaseModel) with necessary attributes
+
+# Define the class User(BaseModel) with necessary attributes
 class User(BaseModel):
     user_id: int
     name: str
