@@ -124,7 +124,7 @@ def fetch_logged_in_user_id():
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     if not is_user_authenticated():
-        return redirect(url_for('login'))
+        return redirect('/')
     # db.setup_database()
     active_user_id = fetch_logged_in_user_id()
     print("User", active_user_id)
@@ -193,7 +193,7 @@ def upload_file():
 @app.route('/profile/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_profile(user_id=1):
     if not is_user_authenticated():
-        return redirect(url_for('login'))
+        return redirect('/')
 
     # Check if the user exists
     user = db.fetch_user(user_id)
@@ -258,7 +258,7 @@ def edit_profile(user_id=1):
 @app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
 def display_profile(user_id=1):
     if not is_user_authenticated():
-        return redirect(url_for('login'))
+        return redirect('/')
     user = db.fetch_user(user_id)
 
     if not user:
