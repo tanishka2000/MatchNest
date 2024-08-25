@@ -13,6 +13,7 @@ def active_user(user_id):
     :param user_id: The ID of the logged-in user.
     """
     with open(SESSION_FILE, 'w') as file:
+        print("Activated User: ", user_id)
         file.write(str(user_id))
 
 
@@ -27,7 +28,6 @@ def fetch_active_user():
 
     with open(SESSION_FILE, 'r') as file:
         user_id = file.read().strip()
-        print("User in file", user_id)
 
     return user_id if user_id else None
 

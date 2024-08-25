@@ -99,11 +99,10 @@ def login():
 
         if user:
             active_user(user[0])
-            flash('Login successful!', 'info')
+            print('Login successful!', 'info')
             return jsonify({"success": True})
-
         else:
-            flash('Invalid email or password.', 'error')
+            jsonify({"success": False, "error": "Invalid Credentials"})
 
         conn.close()
         return render_template('index.html')
@@ -150,9 +149,10 @@ def dashboard():
 @app.context_processor
 def inject_user_id_image():
     logged_in_user = db.fetch_user(fetch_logged_in_user_id())
-    user_profile_pic_url = f"/static/profile_pics/{logged_in_user.profile_pic}" if logged_in_user.profile_pic else "https://via.placeholder.com/40"
-    return dict(fetch_logged_in_user_id=fetch_logged_in_user_id, user_profile_pic_url=user_profile_pic_url)
-
+    if logged_in_user:
+        user_profile_pic_url = f"/static/profile_pics/{logged_in_user.profile_pic}" if logged_in_user.profile_pic else "https://via.placeholder.com/40"
+        return dict(fetch_logged_in_user_id=fetch_logged_in_user_id, user_profile_pic_url=user_profile_pic_url)
+    return dict(fetch_logged_in_user_id=fetch_logged_in_user_id)
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():

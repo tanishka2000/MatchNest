@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>SIGN UP</title>
+  <title>MATCHNEST</title>
     <link href="/static/main.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/main.js"></script>
@@ -61,6 +61,7 @@
         contentType: false,
         processData: false,
         success: function (response) {
+          alert(response)
           if (response.success) {
             window.location.href = '/dashboard'; // Redirect to profile page
           } else {
