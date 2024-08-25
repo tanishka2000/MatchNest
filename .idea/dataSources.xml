@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\crite\PycharmProjects\MatchNest\flaskr\instance\users.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="user_act" uuid="26d0470a-8502-4282-83f9-dc9129ab6b25">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\crite\PycharmProjects\MatchNest\storage\user_act.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

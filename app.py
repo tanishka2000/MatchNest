@@ -10,6 +10,7 @@ from pydantic import ValidationError
 from werkzeug.utils import secure_filename
 
 from Utils.utils import get_zodiac_sign
+from flaskr.UserActivities import UserActivities
 from flaskr.UserDatabase import UserDatabase
 from flaskr.active_user import active_user, end_user_session, fetch_active_user, is_user_authenticated
 from flaskr.matching_algorithm import compute_compatibility_scores
@@ -34,6 +35,7 @@ user_cred_db_file = './storage/user_cred.db'
 db_file = './utils/users.db'
 user_act_db_file = './storage/user_act.db'
 db = UserDatabase()
+ua = UserActivities(user_act_db_file)
 current_user = UserActivitiesModel(user_id=active_user_id)
 
 
@@ -279,7 +281,8 @@ def display_profile(user_id=1):
 def display_matches():
     if not is_user_authenticated():
         return redirect(url_for('login'))
-    matches = db.fetch_matches(active_user_id)
+    active_user_id = fetch_logged_in_user_id()
+    matches = ua.view_matches(active_user_id)
     print(matches)
     matched_users = []
 
@@ -294,13 +297,13 @@ def like_user():
     data = request.get_json()
     user_id = data.get('user_id')
     # Assuming current_user_id is retrieved from session or request
-    current_user_id = 1  # Replace with actual user ID
+    current_user_id = fetch_logged_in_user_id()  # Replace with actual user ID
 
     if not user_id:
         return jsonify({'error': 'Missing user ID'}), 400
 
     # Fetch the user to like
-    db.add_liked_users(current_user_id, user_id)
+    ua.add_liked_user(current_user_id, user_id)
     return jsonify({'status': 'success'}), 200
 
 
@@ -309,13 +312,13 @@ def dislike_user():
     data = request.get_json()
     user_id = data.get('user_id')
     # Assuming current_user_id is retrieved from session or request
-    current_user_id = 1  # Replace with actual user ID
+    current_user_id = fetch_logged_in_user_id()  # Replace with actual user ID
 
     if not user_id:
         return jsonify({'error': 'Missing user ID'}), 400
 
     # Fetch the user to dislike
-    db.add_disliked_users(current_user_id, user_id)
+    ua.add_disliked_user(current_user_id, user_id)
     return jsonify({'status': 'success'}), 200
 
 
