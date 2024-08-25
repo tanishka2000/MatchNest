@@ -142,7 +142,15 @@ def dashboard():
     # Convert the list of tuples to a DataFrame
     df = pd.DataFrame(all_users_df, columns=columns)
     potential_matches = compute_compatibility_scores(logged_in_user, df)
+    # Convert DataFrame to a list of dictionaries
     recommendations = potential_matches.head(25).to_dict(orient='records')
+
+    # Process each recommendation
+    for recommendation in recommendations:
+        # Convert the interests field from string to list if necessary
+        if isinstance(recommendation.get('interests'), str):
+            recommendation['interests'] = [interest.strip() for interest in recommendation['interests'].split(',')]
+
     return render_template('dashboard.html', recommendations=recommendations)
 
 

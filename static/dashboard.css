@@ -89,25 +89,6 @@ body {
   cursor: grabbing;
 }
 
-.tinder--card img {
-  max-width: 100%;
-  pointer-events: none;
-}
-
-.tinder--card h3 {
-  margin-top: 32px;
-  font-size: 32px;
-  padding: 0 16px;
-  pointer-events: none;
-}
-
-.tinder--card p {
-  margin-top: 24px;
-  font-size: 20px;
-  padding: 0 16px;
-  pointer-events: none;
-}
-
 .tinder--buttons {
   flex: 0 0 100px;
   text-align: center;
@@ -128,11 +109,6 @@ body {
   outline: 0;
 }
 
-.tinder--buttons i {
-  font-size: 32px;
-  vertical-align: middle;
-}
-
 .fa-heart {
   color: #FFACE4;
 }
@@ -140,3 +116,86 @@ body {
 .fa-remove {
   color: #CDD6DD;
 }
+
+.thumbnail {
+  display: flex;
+  margin: 1.5em auto;
+  border-radius: 100%;
+  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.name {
+  color: #2D354A;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.title {
+  color: #7C8097;
+  font-weight: 300;
+  font-size: 13px;
+  text-align: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.7em;
+}
+
+.description {
+  color: #080911;
+  font-size: 1em;
+  font-weight: 300;
+  text-align: center;
+  margin: 1em 1em;
+}
+
+.btn {
+  color: #fff;
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: none;
+  display: block;
+  cursor: pointer;
+  font-weight: 300;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 70px;
+  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.16);
+  background: linear-gradient(45deg, rgba(87, 29, 146, 1) 0%, rgba(172, 25, 102, 1) 100%);
+}
+
+ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+ ul li {
+   color: black;
+
+            border-radius: 5px;
+   background: #b3a8d6ff;
+            display: inline-block;
+            font-size: 16px;
+   font-weight: bold;
+            margin: 0 7px 7px 0;
+            padding: 7px 15px;
+
+  text-transform: capitalize;
+        }
+
+ .btn-link {
+    text-decoration: none;
+    color: white; /* Default color */
+}
+
+.btn-link:hover,
+.btn-link:focus,
+.btn-link:active {
+    color: white; /* Color on hover, focus, and active */
+}
+
+.btn-link:visited {
+    color: white; /* Color for visited links */
+}
+

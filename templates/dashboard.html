@@ -18,19 +18,25 @@
         <div class="tinder--cards">
             {% for recommendation in recommendations %}
                 <div class="tinder--card" data-user-id="{{ recommendation.user_id }}">
-                    <img src="/static/profile_pics/{{recommendation.profile_pic}}" width="200" alt="Image for {{ recommendation.title }}">
-                    <h3>{{ recommendation.name }}</h3>
-                    <p style="font-size: 20px">{{ recommendation.bio }}</p>
-                    <br>
-                    <hr style="font-weight: bolder">
-                    <div class="col" style="justify-content: left">
-                        <p style="font-size: 15px">{{ recommendation.age }}</p>
-                        <p style="font-size: 15px">{{ recommendation.location }}</p>
-                        <p style="font-size: 15px">{{ recommendation.profession }}</p>
-                    </div>
-                    <br>
-                    <button type="button" style="padding: 10px 10px; color: white; background: #4caf50; font-weight: bold; height: 30px; border: none; border-radius: 10px">Know More</button>
-                </div>
+                    <img class="thumbnail" src="/static/profile_pics/{{recommendation.profile_pic}}" width="150" alt="Image for {{ recommendation.title }}">
+                    <h3 class="name">{{ recommendation.name }}</h3>
+                    <p class="age">{{ recommendation.age }}, <span style="text-transform: capitalize">{{ recommendation.gender }}</span></p>
+                    <p class="title">{{ recommendation.profession }}, <span style="text-transform: uppercase">{{ recommendation.location }}</span></p>
+                    <p class="description">{{ recommendation.bio }}</p>
+                    <button type="button" class="btn">
+                        <a class="btn-link" href="/profile/{{ recommendation.user_id }}">
+                            Know More
+                        </a>
+                    </button>
+                    <hr style="font-weight: bolder; margin: 1em 2em; color:#b3a8d6ff">
+
+                    <ul>
+                        {% for interest in recommendation.interests %}
+        <li>{{ interest }}</li>
+    {% endfor %}
+                    </ul>
+
+	            </div>
             {% endfor %}
         </div>
 
