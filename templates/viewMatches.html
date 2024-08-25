@@ -19,7 +19,10 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #fff;
+            background: url("/static/love.jpg");
+            background-size: contain;
+            background-position: center;
+            background-repeat: repeat;
             font-family: "Lato", sans-serif;
             font-weight: 400;
         }
@@ -45,7 +48,7 @@
         }
 
         .card {
-            background: #fff;
+            background: #dc3545;
             border-radius: 1.25rem;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -59,12 +62,13 @@
         .card .box {
             position: relative;
             width: 100%;
-            height: 60%;
+    border: 10px solid #dc3545;
+    background: #dc3545;
+            padding: 10px
         }
 
         .card .box .imgBox {
             width: 100%;
-            height: 100%;
             border-radius: 50%;
             overflow: hidden;
         }
@@ -79,8 +83,10 @@
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 6rem;
-            height: 6rem;
+            width: 4rem;
+    height: 4rem;
+    border: 6px solid #dc3545;
+    border-radius: 50%;
             background: #fff;
             border-top-left-radius: 50%;
             display: flex;
@@ -100,13 +106,18 @@
         }
 
         .card .content h3 {
+            color: white;
+            font-weight: bolder;
             font-size: clamp(1.5rem, 1.3909rem + 0.4364vw, 1.8rem);
             margin-bottom: 0.5rem;
         }
 
         .card .content p {
-            margin: 0.625rem 0 1.25rem;
-            color: #565656;
+            margin: 1em 0;
+    font-size: 15px;
+    color: #2b2929;
+    padding: 0px 5px;
+    font-style: italic;
         }
 
         .card .content ul {
@@ -132,33 +143,37 @@
 </head>
 <body>
 {% include 'base.html' %}
-    <section>
-        <h2>Matched!</h2>
-        <div class="container">
+<section>
+    <h2 style="background: rgba(255, 255, 255, 0.7); font-weight: 800; font-size: 60px; width: fit-content">Matched!</h2>
+    <div class="container">
+        <div class="row">
             {% for user in matched_users %}
-            <div class="card">
-                <div class="box">
-                    <div class="imgBox">
-                        <img src="/static/profile_pics/{{ user.profile_pic }}" alt="{{ user.name }}">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="box">
+                        <div class="imgBox">
+                            <img src="/static/profile_pics/{{ user.profile_pic }}" alt="{{ user.name }}">
+                        </div>
+                        <div class="icon">
+                            <a href="/profile/{{user.user_id}}" class="iconBox">
+                                <span class="material-symbols-outlined">arrow_outward</span>
+                            </a>
+                        </div>
                     </div>
-                    <div class="icon">
-                        <a href="/profile/{{user.user_id}}" class="iconBox">
-                            <span class="material-symbols-outlined">arrow_outward</span>
-                        </a>
+                    <div class="content">
+                        <h3>{{ user.name }}</h3>
+                        <hr style="background-color: white;"/>
+                        <p>{{ user.bio }}</p>
                     </div>
-                </div>
-                <div class="content">
-                    <h3>{{ user.name }}</h3>
-                    <p>{{ user.bio }}</p>
-                    <ul>
-                        {% for tag in user.tags %}
-                        <li style="background: {{ user.colors[loop.index0] }};" class="{{ tag }}">{{ tag }}</li>
-                        {% endfor %}
-                    </ul>
                 </div>
             </div>
+            {% if loop.index % 3 == 0 %}
+        </div><div class="row">
+            {% endif %}
             {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
+
 </body>
 </html>

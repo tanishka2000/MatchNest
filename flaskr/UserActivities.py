@@ -112,7 +112,7 @@ class UserActivities:
         conn.close()
 
         if matches:
-            return list(map(int, matches[0].split(',')))
+            return list(map(int, matches[0].split(','))) if matches[0] else []
         else:
             return []
 
