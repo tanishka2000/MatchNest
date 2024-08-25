@@ -59,7 +59,8 @@
         .card-container .round {
             border: 1px solid #03BFCB;
             border-radius: 50%;
-            height: 20vh;
+            height: 30vh;
+            width: 30vh;
             padding: 7px;
         }
 
@@ -192,9 +193,11 @@
             {% endfor %}
         </ul>
 	</div>
+    {% if user.user_id == fetch_logged_in_user_id() | int %}
     <div class="buttons" style="margin: 5%">
-        <a href="/profile/edit/{{ user.user_id }}" class="btn btn-primary">Modify Profile</a>
+        <a href="/profile/edit/{{ user.user_id }}" class="btn btn-primary">Modify my Profile</a>
     </div>
+    {% endif %}
 </div>
 
 </body>

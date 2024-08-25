@@ -48,6 +48,7 @@ def get_zodiac_sign(dob):
 
     for sign, (start, end) in zodiac_signs:
         if start <= dob <= end:
+            print(sign)
             return sign
 
     return "Capricorn" if dob.month == 1 and dob.day <= 19 else None

@@ -14,39 +14,46 @@
                 <a class="nav-link" href="/about">About</a>
             </li>
         </ul>
-        <a href="/profile/3" class="ml-auto">
-            <img src="https://via.placeholder.com/40" alt="Profile Picture" class="user-pic">
-        </a>
+        <div class="dropdown ml-auto">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{user_profile_pic_url}}" alt="Profile Picture" class="user-pic">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/profile/{{ fetch_logged_in_user_id() }}">My Profile</a>
+                <a class="dropdown-item" href="/logout">Logout</a>
+            </div>
+        </div>
     </div>
 </nav>
 
+
 <!-- CSS for Navbar -->
 <style>
-    .navbar {
-        position: relative;
-        overflow: hidden;
-        padding: 0.5rem 1rem;
-        width: 100%;
-    }
+/* Navbar CSS */
+.navbar {
+    position: relative;
+    padding: 0.5rem 1rem;
+    width: 100%;
+}
 
-    .nav-link {
-        color: white;
-    }
+.nav-link {
+    color: white;
+}
 
-    .user-pic {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-        cursor: pointer;
-    }
+.user-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
 
-    @media (max-width: 767px) {
-        .user-pic {
-            width: 30px;
-            height: 30px;
-        }
-    }
+/* Dropdown CSS */
+.dropdown-menu {
+    min-width: 160px; /* Adjust width if needed */
+    z-index: 1000;    /* Ensure dropdown is on top */
+}
+
 </style>
 
 <!-- Bootstrap and jQuery Scripts -->

@@ -5,11 +5,13 @@ import sqlite3
 
 import pandas as pd
 from flask import Flask, request, redirect, url_for, render_template
-from flask import jsonify, session, flash
+from flask import jsonify, flash
 from pydantic import ValidationError
 from werkzeug.utils import secure_filename
 
+from Utils.utils import get_zodiac_sign
 from flaskr.UserDatabase import UserDatabase
+from flaskr.active_user import active_user, end_user_session, fetch_active_user, is_user_authenticated
 from flaskr.matching_algorithm import compute_compatibility_scores
 from flaskr.models import User, Gender, Options, ZodiacSign, MBTITypes, UserIdentifiers, UserActivitiesModel
 from flaskr.storage import init_user_cred
@@ -27,11 +29,11 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
-active_user = 1
+active_user_id = 1
 user_cred_db_file = './storage/user_cred.db'
 db_file = './utils/users.db'
 db = UserDatabase()
-current_user = UserActivitiesModel(user_id=active_user)
+current_user = UserActivitiesModel(user_id=active_user_id)
 
 
 @app.route('/')
@@ -69,11 +71,10 @@ def signup():
                            (new_user_id, name, email, password))
             conn.commit()
             response = {'success': True, 'user_id': new_user_id}
-            db.insert_new_user(User(
-                user_id=new_user_id,
-                name=name
-            ))
+
+            active_user(new_user_id)
             return jsonify(response)
+
         except sqlite3.IntegrityError:
             response = {'success': False, 'error': 'Email already registered.'}
             return jsonify(response)
@@ -97,7 +98,7 @@ def login():
         user = cursor.fetchone()
 
         if user:
-            session['user_id'] = user[0]
+            active_user(user[0])
             flash('Login successful!', 'info')
             return jsonify({"success": True})
 
@@ -105,26 +106,29 @@ def login():
             flash('Invalid email or password.', 'error')
 
         conn.close()
-
         return render_template('index.html')
 
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    end_user_session()
     flash('You have been logged out.')
-    return redirect(url_for('login'))
+    return redirect('/')
 
 
 def fetch_logged_in_user_id():
-    print(session.get('user_id', 1))
-    return session.get('user_id', 1)
+    return fetch_active_user()
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
+    if not is_user_authenticated():
+        return redirect(url_for('login'))
     # db.setup_database()
-    logged_in_user = db.fetch_user(active_user)
+    active_user_id = fetch_logged_in_user_id()
+    print("User", active_user_id)
+    logged_in_user = db.fetch_user(active_user_id)
+    print(logged_in_user)
     if logged_in_user is None:
         print("User ID not found. Exiting.")
     print(logged_in_user)
@@ -141,6 +145,13 @@ def dashboard():
     potential_matches = compute_compatibility_scores(logged_in_user, df)
     recommendations = potential_matches.head(25).to_dict(orient='records')
     return render_template('dashboard.html', recommendations=recommendations)
+
+
+@app.context_processor
+def inject_user_id_image():
+    logged_in_user = db.fetch_user(fetch_logged_in_user_id())
+    user_profile_pic_url = f"/static/profile_pics/{logged_in_user.profile_pic}" if logged_in_user.profile_pic else "https://via.placeholder.com/40"
+    return dict(fetch_logged_in_user_id=fetch_logged_in_user_id, user_profile_pic_url=user_profile_pic_url)
 
 
 @app.route('/upload', methods=['GET', 'POST'])
@@ -170,58 +181,73 @@ def upload_file():
 
 @app.route('/profile/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit_profile(user_id=1):
+    if not is_user_authenticated():
+        return redirect(url_for('login'))
+
+    # Check if the user exists
     user = db.fetch_user(user_id)
 
-    if not user:
-        return jsonify({"success": False, "error": "User not found"}), 404
-
     if request.method == 'POST':
+        # Initialize filename
+        filename = None
+
         if 'profile_pic' in request.files:
             file = request.files['profile_pic']
-            print(file)
             if file and allowed_file(file.filename):
                 # Secure the filename and save it
                 filename = secure_filename(file.filename)
-                filename = user.name.split(' ')[0]
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
                 file.save(file_path)
-                print("FILE:", file_path, filename)
-                user.profile_pic = filename
 
+        # If filename is an empty string, use the existing profile_pic
+        profile_pic = filename if filename and filename.strip() != "" else (user.profile_pic if user else None)
+
+        # Collect updated data from the form
         updated_data = {
-            "user_id": user.user_id,
-            "name": request.form.get('name', user.name),
-            "profile_pic": user.profile_pic,
-            "bio": request.form.get('bio', user.bio),
-            "birth_date": request.form.get('birth_date', user.birth_date),
-            "zodiac_sign": request.form.get('zodiac_sign', user.zodiac_sign),
-            "gender": request.form.get('gender', user.gender),
-            "profession": request.form.get('profession', user.profession),
-            "location": request.form.get('location', user.location),
-            "smoking": request.form.get('smoking', user.smoking),
-            "drinking": request.form.get('drinking', user.drinking),
-            "interests": request.form.get('interests').split(',') if request.form.get('interests') else user.interests,
-            "mbti": request.form.get('mbti', user.mbti),
-            "height": int(request.form.get('height', user.height)),
+            "user_id": user_id,  # Use provided user_id
+            "name": request.form.get('name', user.name if user else ''),
+            "profile_pic": profile_pic,
+            "bio": request.form.get('bio', user.bio if user else ''),
+            "birth_date": request.form.get('dob', user.birth_date if user else ''),
+            "zodiac_sign": request.form.get('zodiac_sign', user.zodiac_sign if user else ''),
+            "gender": request.form.get('gender', user.gender if user else ''),
+            "profession": request.form.get('profession', user.profession if user else ''),
+            "location": request.form.get('location', user.location if user else ''),
+            "smoking": request.form.get('smoking', user.smoking if user else ''),
+            "drinking": request.form.get('drinking', user.drinking if user else ''),
+            "interests": request.form.get('interests', ',').split(',') if request.form.get('interests') else (
+                user.interests if user else []),
+            "mbti": request.form.get('mbti', user.mbti if user else ''),
+            "height": int(request.form.get('height', user.height if user else 0)),
         }
 
         try:
-            updated_user = UserIdentifiers(**updated_data)
-            db.update_account(updated_user)
+            # If user is None, it's a new user. Otherwise, it's an existing user.
+            if user is None:
+                new_user = UserIdentifiers(**updated_data)
+                db.insert_new_user(new_user)  # Insert new user into DB
+            else:
+                updated_user = UserIdentifiers(**updated_data)
+                db.update_account(updated_user)  # Update existing user
+
             return jsonify({"success": True})
         except ValidationError as e:
             return jsonify({"success": False, "error": str(e)}), 400
 
+    # Render form with blank fields for new users or existing user data
     return render_template('registerProfile.html',
                            user=user,
                            Gender=Gender,
                            Options=Options,
                            ZodiacSign=ZodiacSign,
-                           MBTITypes=MBTITypes, fetch_logged_in_user_id=fetch_logged_in_user_id)
+                           MBTITypes=MBTITypes,
+                           fetch_logged_in_user_id=fetch_logged_in_user_id)
 
 
 @app.route('/profile/<int:user_id>', methods=['GET', 'POST'])
 def display_profile(user_id=1):
+    if not is_user_authenticated():
+        return redirect(url_for('login'))
     user = db.fetch_user(user_id)
 
     if not user:
@@ -242,7 +268,9 @@ def display_profile(user_id=1):
 
 @app.route('/matches', methods=['GET', 'POST'])
 def display_matches():
-    matches = db.fetch_matches(active_user)
+    if not is_user_authenticated():
+        return redirect(url_for('login'))
+    matches = db.fetch_matches(active_user_id)
     print(matches)
     matched_users = []
 
@@ -281,6 +309,14 @@ def dislike_user():
     db.add_disliked_users(current_user_id, user_id)
     return jsonify({'status': 'success'}), 200
 
+
+@app.route('/get_zodiac_sign', methods=['POST'])
+def calculate_zodiac():
+    dob = request.json.get('dob')
+    if dob:
+        zodiac_sign = get_zodiac_sign(dob)
+        return jsonify({"success": True, 'zodiac_sign': zodiac_sign})
+    return jsonify({'error': 'Invalid date of birth'}), 400
 
 if __name__ == '__main__':
     db = UserDatabase()

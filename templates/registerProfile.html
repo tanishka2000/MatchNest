@@ -10,130 +10,130 @@
     <style>
         @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-* {
-    box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-    background-color: #28223F;
-    font-family: Montserrat, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-    color: #B3B8CD;
-}
+        body {
+            background-color: #28223F;
+            font-family: Montserrat, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #B3B8CD;
+        }
 
-.container {
-    background-color: #231E39;
-    border-radius: 10px;
-    box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
-    padding: 30px;
-    max-width: 600px;
-    width: 350px;
-}
+        .container {
+            background-color: #231E39;
+            border-radius: 10px;
+            box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            max-width: 600px;
+            width: 350px;
+        }
 
-h1 {
-    color: #03BFCB;
-    text-align: center;
-    margin-bottom: 20px;
-}
+        h1 {
+            color: #03BFCB;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-.form-group label {
-    font-weight: bold;
-    color: #B3B8CD;
-}
+        .form-group label {
+            font-weight: bold;
+            color: #B3B8CD;
+        }
 
-.form-control,
-.form-control-file,
-.form-control:disabled {
-    background-color: #1F1A36;
-    color: #B3B8CD;
-    border: 1px solid #03BFCB;
-    border-radius: 5px;
-}
+        .form-control,
+        .form-control-file,
+        .form-control:disabled {
+            background-color: #1F1A36;
+            color: #B3B8CD;
+            border: 1px solid #03BFCB;
+            border-radius: 5px;
+        }
 
-.form-control::placeholder {
-    color: #717a7e;
-}
+        .form-control::placeholder {
+            color: #717a7e;
+        }
 
-.form-control:focus {
-    border-color: #03BFCB;
-    box-shadow: none;
-}
+        .form-control:focus {
+            border-color: #03BFCB;
+            box-shadow: none;
+        }
 
-.form-group textarea.form-control {
-    resize: none;
-    height: 100px;
-}
+        .form-group textarea.form-control {
+            resize: none;
+            height: 100px;
+        }
 
-select.form-control {
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#03BFCB" d="M2 0L0 2h4zM0 3l2 2 2-2z"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 8px 10px;
-}
+        select.form-control {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="#03BFCB" d="M2 0L0 2h4zM0 3l2 2 2-2z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 8px 10px;
+        }
 
-.profile-pic-container {
-    position: relative;
-    display: block;
-    text-align: center;
-    margin-bottom: 20px;
-}
+        .profile-pic-container {
+            position: relative;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-.profile-pic {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #03BFCB;
-}
+        .profile-pic {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #03BFCB;
+        }
 
-.remove-pic {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: #E74C3C;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-}
+        .remove-pic {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #E74C3C;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
 
-button.btn-primary {
-    background-color: #03BFCB;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    width: 100%;
-}
+        button.btn-primary {
+            background-color: #03BFCB;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            width: 100%;
+        }
 
-button.btn-primary:hover {
-    background-color: #02899C;
-}
+        button.btn-primary:hover {
+            background-color: #02899C;
+        }
 
-#interests-list .interest-btn {
-    background-color: #1F1A36;
-    border: 1px solid #2D2747;
-    color: #B3B8CD;
-    border-radius: 5px;
-}
+        #interests-list .interest-btn {
+            background-color: #1F1A36;
+            border: 1px solid #2D2747;
+            color: #B3B8CD;
+            border-radius: 5px;
+        }
 
-#interests-list .interest-btn .badge {
-    background-color: transparent;
-    color: #E74C3C;
-    cursor: pointer;
-}
+        #interests-list .interest-btn .badge {
+            background-color: transparent;
+            color: #E74C3C;
+            cursor: pointer;
+        }
 
-#interests-list .interest-btn .badge:hover {
-    color: #3498db;
-}
+        #interests-list .interest-btn .badge:hover {
+            color: #3498db;
+        }
 
     </style>
 </head>
@@ -141,178 +141,211 @@ button.btn-primary:hover {
 
 {% include 'base.html' %}
 <div class="container">
-     <h1>User Profile</h1>
+    <h1>User Profile</h1>
     <form id="profileForm" method="POST" enctype="multipart/form-data">
         <!-- Profile Picture Section -->
         <div class="form-group">
-            <label for="profile_pic">Profile Picture</label>
-            <div class="profile-pic-container">
-                {% if user.profile_pic %}
-                <img id="profile-pic" src="/static/profile_pics/{{user.profile_pic}}" class="profile-pic" alt="Profile Picture">
-                <button type="button" id="remove-pic" class="remove-pic">&times;</button>
-                {% else %}
-                <img id="profile-pic" src="https://via.placeholder.com/150" class="profile-pic" alt="Profile Picture">
-                {% endif %}
-            </div>
-            <input type="file" class="form-control-file mt-2" id="profile-pic-input" name="profile_pic">
-        </div>
+    <label for="profile_pic">Profile Picture</label>
+    <div class="profile-pic-container">
+        {% if user.profile_pic %}
+            <img id="profile-pic" src="/static/profile_pics/{{user.profile_pic}}" class="profile-pic" alt="Profile Picture">
+            <button type="button" id="remove-pic" class="remove-pic">&times;</button>
+        {% else %}
+            <img id="profile-pic" src="https://via.placeholder.com/150" class="profile-pic" alt="Profile Picture">
+        {% endif %}
+    </div>
+    <input type="file" class="form-control-file mt-2" id="profile-pic-input" name="profile_pic"
+           {% if not user.profile_pic %}required{% endif %}>
+</div>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" disabled>
+            <input type="text" class="form-control" id="name" name="name" value="{{ user.name }}" required>
         </div>
         <div class="form-group">
             <label for="bio">Bio</label>
-            <textarea class="form-control" id="bio" name="bio">{{ user.bio }}</textarea>
+            <textarea class="form-control" id="bio" name="bio" required>{{ user.bio }}</textarea>
         </div>
         <div class="form-group">
             <label for="dob">Date of Birth</label>
-            <input type="date" class="form-control" id="dob" name="dob" value="{{ user.birth_date }}" disabled>
+            <input type="date" class="form-control" id="dob" name="dob" value="{{ user.birth_date }}" required>
         </div>
         <!-- Zodiac Sign Dropdown (disabled)-->
         <div class="form-group">
             <label for="zodiac_sign">Zodiac Sign</label>
-            <select class="form-control" id="zodiac_sign" name="zodiac_sign" disabled>
-                {% for z in ZodiacSign %}
-                <option value="{{ z.value }}" {% if user.zodiac_sign == z.value %}selected{% endif %}>{{ z.value }}</option>
-                {% endfor %}
-            </select>
+            <input type="text" class="form-control" id="zodiac_sign" name="zodiac_sign" value="{{ user.zodiac_sign.value }}"
+                   readonly>
         </div>
         <div class="form-group">
             <label for="gender">Gender</label>
-            <select class="form-control" id="gender" name="gender">
+            <select class="form-control" id="gender" name="gender" required>
                 {% for g in Gender %}
-                <option value="{{ g.value }}" {% if user.gender == g.value %}selected{% endif %}>{{ g.value }}</option>
+                <option value="{{ g.value }}" {% if user.gender== g.value %}selected{% endif %}>{{ g.value }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group">
             <label for="profession">Profession</label>
-            <input type="text" class="form-control" id="profession" name="profession" value="{{ user.profession }}">
+            <input type="text" class="form-control" id="profession" name="profession" value="{{ user.profession }}"
+                   required>
         </div>
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" id="location" name="location" value="{{ user.location }}">
+            <input type="text" class="form-control" id="location" name="location" value="{{ user.location }}" required>
         </div>
         <div class="form-group">
             <label for="smoking">Smoking</label>
-            <select class="form-control" id="smoking" name="smoking">
+            <select class="form-control" id="smoking" name="smoking" required>
                 {% for option in Options %}
-                <option value="{{ option.value }}" {% if user.smoking == option.value %}selected{% endif %}>{{ option.value }}</option>
+                <option value="{{ option.value }}" {% if user.smoking== option.value %}selected{% endif %}>{{
+                    option.value }}
+                </option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group">
             <label for="drinking">Drinking</label>
-            <select class="form-control" id="drinking" name="drinking">
+            <select class="form-control" id="drinking" name="drinking" required>
                 {% for option in Options %}
-                <option value="{{ option.value }}" {% if user.drinking == option.value %}selected{% endif %}>{{ option.value }}</option>
+                <option value="{{ option.value }}" {% if user.drinking== option.value %}selected{% endif %}>{{
+                    option.value }}
+                </option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group">
             <label for="interests">Interests</label>
-            <input type="text" class="form-control" id="interests-input" placeholder="Write Comma Separated interests" name="interests" value="{{ ','.join(user.interests) }}">
+            <input type="text" class="form-control" id="interests-input" placeholder="Write Comma Separated interests"
+                   name="interests" value="{{ ','.join(user.interests) }}" required>
             <div id="interests-list" class="mt-2">
                 {% for interest in user.interests %}
                 <button type="button" class="btn btn-secondary btn-sm m-1 interest" data-hobby="{{ interest }}">
-                    {{ hobby }} <span class="badge badge-light">x</span>
+                    {{ interest }} <span class="badge badge-light">x</span>
                 </button>
                 {% endfor %}
             </div>
         </div>
         <div class="form-group">
             <label for="mbti">MBTI</label>
-            <select class="form-control" id="mbti" name="mbti">
+            <select class="form-control" id="mbti" name="mbti" required>
                 {% for type in MBTITypes %}
-                <option value="{{ type.value }}" {% if user.mbti == type.value %}selected{% endif %}>{{ type.value }}</option>
+                <option value="{{ type.value }}" {% if user.mbti== type.value %}selected{% endif %}>{{ type.value }}
+                </option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group">
             <label for="height">Height (cm)</label>
-            <input type="number" class="form-control" id="height" name="height" value="{{ user.height }}">
+            <input type="number" class="form-control" id="height" name="height" value="{{ user.height }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
 </body>
 <script>
-        $(document).ready(function() {
+    $(document).ready(function () {
 
-    // Function to update interests display
-    function updateInterestsDisplay() {
-        var interests = $('#interests-input').val().split(',').map(h => h.trim()).filter(h => h.length > 0);
-        $('#interests-list').empty();
-        interests.forEach(interest => {
-            $('#interests-list').append(
-                `<button type="button" class="btn btn-secondary btn-sm m-1 interest-btn" data-interest="${interest}">
-                    ${interest} <span class="badge badge-light">x</span>
-                </button>`
-            );
-        });
-    }
+        // Function to update interests display
+        function updateInterestsDisplay() {
+            var interests = $('#interests-input').val().split(',').map(h => h.trim()).filter(h => h.length > 0);
+            $('#interests-list').empty();
+            interests.forEach(interest => {
+                $('#interests-list').append(
+                    `<button type="button" class="btn btn-secondary btn-sm m-1 interest-btn" data-interest="${interest}">
+                        ${interest} <span class="badge badge-light">x</span>
+                    </button>`
+                );
+            });
+        }
 
-    // Initialize interests list on page load
-    updateInterestsDisplay();
+        // Function to update Zodiac Sign based on DOB
+        function updateZodiacSign() {
+            var dob = $('#dob').val();
+            if (dob) {
+                $.ajax({
+                    url: '/get_zodiac_sign',  // Flask route to get Zodiac Sign
+            type: 'POST',
+            contentType: 'application/json',  // Set the correct Content-Type header
+            dataType: 'json',  // Expect JSON response from the server
+            data: JSON.stringify({dob: dob}),  // Convert the data to a JSON string
+            success: function (response) {
+                        if (response.success) {
+                            var zodiacSign = response.zodiac_sign;
+                            $('#zodiac_sign').val(zodiacSign);
+                        } else {
+                            alert('Error fetching Zodiac Sign.');
+                        }
+                    },
+                    error: function () {
+                        alert('An unexpected error occurred. Please try again.');
+                    }
+                });
+            }
+        }
 
-    // Update interests display when input changes
-    $('#interests-input').on('input', updateInterestsDisplay);
-
-    // Handle interest removal
-    $('#interests-list').on('click', '.interest-btn .badge', function() {
-        var button = $(this).closest('.interest-btn');
-        var interest = button.data('interest');
-        var interestsInput = $('#interests-input');
-        var interests = interestsInput.val().split(',').map(h => h.trim()).filter(h => h !== interest);
-        interestsInput.val(interests.join(','));
+        // Initialize interests list on page load
         updateInterestsDisplay();
-    });
 
-    // Handle profile picture removal
-    $('#remove-pic').on('click', function() {
-        $('#profile-pic').attr('src', 'https://via.placeholder.com/150'); // Reset to placeholder
-        $('#profile-pic-input').val(''); // Clear file input
-        $(this).hide(); // Hide the remove button
-    });
+        // Update interests display when input changes
+        $('#interests-input').on('input', updateInterestsDisplay);
 
-    // Handle profile picture upload dynamically
-    $('#profile-pic-input').on('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                $('#profile-pic').attr('src', e.target.result); // Update image source dynamically
+        // Handle interest removal
+        $('#interests-list').on('click', '.interest-btn .badge', function () {
+            var button = $(this).closest('.interest-btn');
+            var interest = button.data('interest');
+            var interestsInput = $('#interests-input');
+            var interests = interestsInput.val().split(',').map(h => h.trim()).filter(h => h !== interest);
+            interestsInput.val(interests.join(','));
+            updateInterestsDisplay();
+        });
+
+        // Handle profile picture removal
+        $('#remove-pic').on('click', function () {
+            $('#profile-pic').attr('src', 'https://via.placeholder.com/150'); // Reset to placeholder
+            $('#profile-pic-input').val(''); // Clear file input
+            $(this).hide(); // Hide the remove button
+        });
+
+        // Handle profile picture upload dynamically
+        $('#profile-pic-input').on('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#profile-pic').attr('src', e.target.result); // Update image source dynamically
+                }
+                reader.readAsDataURL(file);
+                $('#remove-pic').show(); // Show the remove button
             }
-            reader.readAsDataURL(file);
-            $('#remove-pic').show(); // Show the remove button
-        }
+        });
+
+        // Update Zodiac Sign when DOB changes
+        $('#dob').on('change', updateZodiacSign);
+
+        // Handle form submission
+        $('#profileForm').on('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var formData = new FormData(this); // Create FormData object to handle file uploads
+
+            $.ajax({
+                url: '/profile/edit/{{fetch_logged_in_user_id()}}',  // Flask will dynamically generate the correct URL
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '/profile/{{fetch_logged_in_user_id()}}'; // Redirect to profile page
+                    } else {
+                        alert('Error updating profile: ' + (response.error || 'Please try again.'));
+                    }
+                },
+                error: function () {
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            });
+        });
     });
-
-    // Handle form submission
-    $('#profileForm').on('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    var formData = new FormData(this); // Create FormData object to handle file uploads
-
-    $.ajax({
-        url: '/profile/edit/{{fetch_logged_in_user_id()}}',  // Flask will dynamically generate the correct URL
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-            if (response.success) {
-                window.location.href = '/profile/{{fetch_logged_in_user_id()}}'; // Redirect to profile page
-            } else {
-                alert('Error updating profile: ' + (response.error || 'Please try again.'));
-            }
-        },
-        error: function() {
-            alert('An unexpected error occurred. Please try again.');
-        }
-    });
-});
-});
-
 </script>
+
 </html>

@@ -101,7 +101,7 @@
           dataType: 'json', // Expect a JSON response
           success: function (response) {
             if (response.success) {
-              window.location.href = '/profile/' + response.user_id; // Redirect to profile page
+              window.location.href = '/profile/edit/' + response.user_id; // Redirect to profile page
             } else {
               alert('Error signing up: ' + (response || 'Please try again.'));
             }

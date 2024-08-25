@@ -68,10 +68,10 @@ class UserActivitiesModel(BaseModel):
 
 class UserDetails(BaseModel):
     location: str
-    smoking: Options
-    drinking: Options
+    smoking: Options = Options.NEVER
+    drinking: Options = Options.NEVER
     interests: List[str]
-    zodiac_sign: Optional[ZodiacSign]
+    zodiac_sign: Optional[ZodiacSign] = ZodiacSign.AQUARIUS
     mbti: MBTITypes
     height: int
 
@@ -81,7 +81,7 @@ class UserIdentifiers(UserDetails):
     name: str
     bio: str
     birth_date: str
-    gender: Gender
+    gender: Gender = Gender.PREFER_NOT_TO_SAY
     profession: str
     profile_pic: str = ""
 
@@ -91,15 +91,15 @@ class User(BaseModel):
     name: str
     bio: str = ""
     birth_date: str = ""
-    gender: Gender = None
+    gender: Gender = Gender.PREFER_NOT_TO_SAY
     profession: str = ""
     location: str = ""
-    smoking: Options = None
+    smoking: Options = Options.NEVER
     age: Optional[int] = None
-    zodiac_sign: Optional[ZodiacSign] = None
-    drinking: Options = None
+    zodiac_sign: Optional[ZodiacSign] = ZodiacSign.AQUARIUS
+    drinking: Options = Options.NEVER
     interests: List[str] = []
-    mbti: MBTITypes = None
+    mbti: MBTITypes = MBTITypes.ENFJ
     height: int = 0
     profile_pic: str = ""
 
