@@ -35,21 +35,94 @@ application focuses on delivering personalized user recommendations based on use
 
 ### Setup
 
+## Project Setup
+
+Here’s the complete Markdown file with all the bash commands included:
+
+```markdown
+# MatchNest
+
+This project is designed to help users find compatible matches based on various factors such as location, age, interests, and more.
+
+## Project Setup
+
+Follow the steps below to set up and run the project locally:
+
+### 1. Clone the Repository
+
+To get started, clone the repository from GitHub and navigate into the project directory:
+
+```bash
+git clone https://github.com/yourusername/matchnest.git
+cd matchnest
+```
+
+### 2. Install Python Dependencies
+
+Install the required Python dependencies by running the following command:
+
+```bash
+pip install -r requirements.txt
+```
+
+This will install all the necessary packages listed in the `requirements.txt` file.
+
+### 3. Run Flask
+
+Start the Flask development server to run the application:
+
+```bash
+flask run
+```
+
+Once the server is running, you can access the application in your web browser at `http://127.0.0.1:5000/`.
+
+## Bash Commands Summary
+
+Below is a summary of all the bash commands used in this project setup:
+
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/yourusername/matchnest.git
-   cd matchnest
+    ```bash
+    git clone https://github.com/yourusername/matchnest.git
+    ```
 
-2. **Install Python Dependencies:**
+2. **Navigate into the project directory:**
+
+    ```bash
+    cd matchnest
+    ```
+
+3. **Install dependencies:**
 
     ```bash
     pip install -r requirements.txt
+    ```
 
-3. **Run Flask:**
+4. **Run Flask:**
 
     ```bash
-   flask run
+    flask run
+    ```
+
+## Features
+
+- User registration and authentication
+- Profile creation and editing
+- Matching algorithm based on various compatibility factors
+- Display of potential matches with options to like or dislike
+- User interaction management, including likes, dislikes, and matches
+
+## Contributing
+
+If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+```
+
+This Markdown file includes all the bash commands used in the project setup, providing a clear and concise guide for users to get the project up and running.
 
 ### Usage
 
