@@ -13,6 +13,7 @@ application focuses on delivering personalized user recommendations based on use
 - [Compatibility Scoring](#compatibility-scoring)
 - [Contributing](#contributing)
 - [License](#license)
+- [Contact](#contact)
 
 ## Features
 
@@ -35,96 +36,35 @@ application focuses on delivering personalized user recommendations based on use
 
 ### Setup
 
-## Project Setup
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/tanishka2000/MatchNest.git
+   cd MatchNest
+   ```
 
-Here’s the complete Markdown file with all the bash commands included:
+2. **Create a Virtual Environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   ```
 
-```markdown
-# MatchNest
+3. **Install Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-This project is designed to help users find compatible matches based on various factors such as location, age, interests, and more.
+4. **Initialize the Database:**
+   ```bash
+   flask init-db
+   ```
 
-## Project Setup
+5. **Run the Application:**
+   ```bash
+   flask run
+   ```
+   Access the application at `http://127.0.0.1:5000/`.
 
-Follow the steps below to set up and run the project locally:
-
-### 1. Clone the Repository
-
-To get started, clone the repository from GitHub and navigate into the project directory:
-
-```bash
-git clone https://github.com/yourusername/matchnest.git
-cd matchnest
-```
-
-### 2. Install Python Dependencies
-
-Install the required Python dependencies by running the following command:
-
-```bash
-pip install -r requirements.txt
-```
-
-This will install all the necessary packages listed in the `requirements.txt` file.
-
-### 3. Run Flask
-
-Start the Flask development server to run the application:
-
-```bash
-flask run
-```
-
-Once the server is running, you can access the application in your web browser at `http://127.0.0.1:5000/`.
-
-## Bash Commands Summary
-
-Below is a summary of all the bash commands used in this project setup:
-
-1. **Clone the repository:**
-
-    ```bash
-    git clone https://github.com/yourusername/matchnest.git
-    ```
-
-2. **Navigate into the project directory:**
-
-    ```bash
-    cd matchnest
-    ```
-
-3. **Install dependencies:**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Run Flask:**
-
-    ```bash
-    flask run
-    ```
-
-## Features
-
-- User registration and authentication
-- Profile creation and editing
-- Matching algorithm based on various compatibility factors
-- Display of potential matches with options to like or dislike
-- User interaction management, including likes, dislikes, and matches
-
-## Contributing
-
-If you'd like to contribute to this project, please fork the repository and use a feature branch. Pull requests are warmly welcome.
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
-```
-
-This Markdown file includes all the bash commands used in the project setup, providing a clear and concise guide for users to get the project up and running.
-
-### Usage
+## Usage
 
 Sign Up: Create a new account using the signup form.
 Login: Use your credentials to log in.
@@ -132,7 +72,7 @@ Update Profile: Add a bio, upload a profile picture, and set preferences.
 Swipe: Browse through recommended profiles and swipe left or right.
 Matches: View your matches and start interacting.
 
-### Database Schema
+## Database Schema
 
 The application uses SQLite3 for data persistence. The following tables are defined:
 
@@ -140,7 +80,7 @@ The application uses SQLite3 for data persistence. The following tables are defi
 **user_preferences:** Stores user preferences like age range, gender preference, etc.
 **user_activities:** Tracks liked, disliked, and matched users.
 
-### Compatibility Scoring
+## Compatibility Scoring
 
 The app calculates compatibility scores based on:
 
@@ -151,3 +91,21 @@ The app calculates compatibility scores based on:
 **Age Difference**: Scores based on age differences.
 
 These scores are used to recommend the most compatible matches to users.
+
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a new branch (`feature/YourFeature`).
+3. Commit your changes with clear messages.
+4. Push to the branch.
+5. Open a pull request detailing your changes.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+## Contact
+
+For questions or support, please open an issue in this repository.
